@@ -1,6 +1,12 @@
 {
     "controller.Win32-Front.label": "电脑端-前台",
     "controller.Win32-Window-Background.label": "电脑端-后台",
+    "group.daily.label": "日常任务",
+    "group.daily.description": "每日可执行的任务",
+    "group.realtime.label": "实时任务",
+    "group.realtime.description": "需要实时执行的任务",
+    "group.utility.label": "实用工具",
+    "group.utility.description": "辅助工具和小功能",
     "task.CashShop.label": "付费商店",
     "task.CashShop.description": "进入付费商店界面，领取商店奖励",
     "option.CashShopFreePackage.label": "领取免费礼包",
@@ -80,5 +86,9 @@
     "option.Pass.label": "Pass奖励",
     "task.Cooperation.label": "协同作战",
     "task.Cooperation.description": "完成协同作战",
-    "option.FreeRecruit.label": "免费招募"
+    "option.FreeRecruit.label": "免费招募",
+    "preset.DailyFull.label": "全量日常",
+    "preset.DailyFull.description": "执行所有日常任务",
+    "preset.QuickDaily.label": "快速日常",
+    "preset.QuickDaily.description": "仅执行部分日常任务，快速拿满每日奖励"
 }

@@ -50,11 +50,18 @@
     "group": [
         {
             "name": "daily",
-            "label": "日常任务"
+            "label": "$group.daily.label",
+            "description": "$group.daily.description"
         },
         {
-            "name": "standalone",
-            "label": "独立任务"
+            "name": "realtime",
+            "label": "$group.realtime.label",
+            "description": "$group.realtime.description"
+        },
+        {
+            "name": "utility",
+            "label": "$group.utility.label",
+            "description": "$group.utility.description"
         }
     ],
     "import": [
@@ -67,6 +74,8 @@
         "tasks/Output.json",
         "tasks/Advise.json",
         "tasks/Cooperation.json",
-        "tasks/DailyRewards.json"
+        "tasks/DailyRewards.json",
+        "tasks/preset/DailyFull.json",
+        "tasks/preset/QuickDaily.json"
     ]
 }

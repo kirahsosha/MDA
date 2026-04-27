@@ -1,6 +1,12 @@
 {
     "controller.Win32-Front.label": "PC - Front",
     "controller.Win32-Window-Background.label": "PC - Background",
+    "group.daily.label": "Daily Tasks",
+    "group.daily.description": "Tasks that can be executed daily",
+    "group.realtime.label": "Real-time Tasks",
+    "group.realtime.description": "Tasks that require real-time execution",
+    "group.utility.label": "Utilities",
+    "group.utility.description": "Auxiliary tools and small features",
     "task.CashShop.label": "Cash Shop",
     "task.CashShop.description": "Enter the cash shop interface and claim shop rewards",
     "option.CashShopFreePackage.label": "Claim Free Package",
@@ -80,5 +86,9 @@
     "option.Pass.label": "Pass Rewards",
     "task.Cooperation.label": "Cooperation Battle",
     "task.Cooperation.description": "Complete cooperation battle",
-    "option.FreeRecruit.label": "Free Recruitment"
+    "option.FreeRecruit.label": "Free Recruitment",
+    "preset.DailyFull.label": "Daily Full",
+    "preset.DailyFull.description": "Execute all daily tasks, including simulation room, arena, interception, tribe tower, etc.",
+    "preset.QuickDaily.label": "Quick Daily",
+    "preset.QuickDaily.description": "Only execute simulation room, interception, advise, outpost, shop, and daily rewards"
 }

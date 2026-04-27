@@ -1,0 +1,62 @@
+{
+    "preset": [
+        {
+            "name": "QuickDaily",
+            "label": "$preset.QuickDaily.label",
+            "description": "$preset.QuickDaily.description",
+            "task": [
+                {
+                    "name": "Shop",
+                    "option": {
+                        "CommonShopFreeGoods": "Yes",
+                        "CommonShopCoreDustCase": "No",
+                        "RecyclingShopList": ["Gem"]
+                    }
+                },
+                {
+                    "name": "SimulationRoom",
+                    "option": {
+                        "BeginSimulation": "No",
+                        "StartOverlock": "Yes",
+                        "AutoBIOSSetting": "Yes"
+                    }
+                },
+                {
+                    "name": "Interception",
+                    "option": {
+                        "InterceptionType": "AnomalyInterception",
+                        "AnomalyInterceptionTarget": "AnomalyKraken",
+                        "ManualInterceptionBattle": "No"
+                    }
+                },
+                {
+                    "name": "Output",
+                    "option": {
+                        "DefenseRewards": "Yes",
+                        "BulletinBoard": "Yes",
+                        "BriefEncounter": "Yes"
+                    }
+                },
+                {
+                    "name": "Advise",
+                    "option": {
+                        "NikkeAdvise": "Yes",
+                        "EpisodeReward": "Yes",
+                        "EpisodeViewingReward": "Yes"
+                    }
+                },
+                {
+                    "name": "DailyRewards",
+                    "option": {
+                        "FriendPoints": "Yes",
+                        "Email": "Yes",
+                        "RankingRewards": "Yes",
+                        "Mission": "Yes",
+                        "Pass": "Yes",
+                        "FreeRecruit": "Yes"
+                    }
+                }
+            ]
+        }
+    ]
+}

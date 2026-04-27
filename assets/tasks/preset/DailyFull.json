@@ -1,0 +1,91 @@
+{
+    "preset": [
+        {
+            "name": "DailyFull",
+            "label": "$preset.DailyFull.label",
+            "description": "$preset.DailyFull.description",
+            "task": [
+                {
+                    "name": "CashShop",
+                    "option": {
+                        "CashShopFreePackage": "Yes",
+                        "StepUpPackage": "No"
+                    }
+                },
+                {
+                    "name": "Shop",
+                    "option": {
+                        "CommonShopFreeGoods": "Yes",
+                        "CommonShopCoreDustCase": "No",
+                        "RecyclingShopList": ["Gem"]
+                    }
+                },
+                {
+                    "name": "SimulationRoom",
+                    "option": {
+                        "BeginSimulation": "Yes",
+                        "StartOverlock": "Yes",
+                        "AutoBIOSSetting": "Yes"
+                    }
+                },
+                {
+                    "name": "Arena",
+                    "option": {
+                        "SpecialReward": "Yes",
+                        "EnterRookieArena": "Yes",
+                        "EnterSpecialArena": "No",
+                        "EnterChampionArena": "No"
+                    }
+                },
+                {
+                    "name": "TribeTower",
+                    "option": {
+                        "EnterCommonTower": "No",
+                        "EnterElysionTower": "Yes",
+                        "EnterMissilisTower": "Yes",
+                        "EnterTetraTower": "Yes",
+                        "EnterPilgrimTower": "Yes"
+                    }
+                },
+                {
+                    "name": "Interception",
+                    "option": {
+                        "InterceptionType": "AnomalyInterception",
+                        "AnomalyInterceptionTarget": "AnomalyKraken",
+                        "ManualInterceptionBattle": "No"
+                    }
+                },
+                {
+                    "name": "Output",
+                    "option": {
+                        "DefenseRewards": "Yes",
+                        "BulletinBoard": "Yes",
+                        "BriefEncounter": "Yes"
+                    }
+                },
+                {
+                    "name": "Advise",
+                    "option": {
+                        "NikkeAdvise": "Yes",
+                        "EpisodeReward": "Yes",
+                        "EpisodeViewingReward": "Yes"
+                    }
+                },
+                {
+                    "name": "Cooperation"
+                },
+                {
+                    "name": "DailyRewards",
+                    "option": {
+                        "FriendPoints": "Yes",
+                        "Email": "Yes",
+                        "RankingRewards": "Yes",
+                        "Mission": "Yes",
+                        "Pass": "Yes",
+                        "FreeRecruit": "Yes"
+                    }
+                }
+            ]
+        }
+    ]
+}
