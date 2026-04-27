@@ -1,0 +1,178 @@
+{
+    "Pass": {
+        "desc": "Pass入口",
+        "next": [
+            "PassStart",
+            "EndTask"
+        ]
+    },
+    "PassStart": {
+        "desc": "Pass",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1116,
+                    91,
+                    163,
+                    66
+                ],
+                "template": [
+                    "RedDot.png",
+                    "PassRedDot.png"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]PassRedDotClick",
+            "[JumpBack]PassClick",
+            "PassReward"
+        ]
+    },
+    "PassRedDotClick": {
+        "desc": "点击红点切换Pass",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1116,
+                    91,
+                    163,
+                    66
+                ],
+                "template": [
+                    "PassRedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -5,
+                    5,
+                    0,
+                    0
+                ]
+            }
+        },
+        "post_wait_freezes": 500
+    },
+    "PassClick": {
+        "desc": "点击Pass",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1116,
+                    91,
+                    163,
+                    66
+                ],
+                "template": [
+                    "RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -5,
+                    5,
+                    0,
+                    0
+                ]
+            }
+        }
+    },
+    "PassReward": {
+        "desc": "Pass奖励",
+        "post_wait_freezes": 500,
+        "next": [
+            "[JumpBack]PassRedDot",
+            "EndTask"
+        ]
+    },
+    "PassRedDot": {
+        "desc": "Pass奖励",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    622,
+                    215,
+                    203,
+                    19
+                ],
+                "template": [
+                    "RedDot.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click",
+            "param": {
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
+            }
+        },
+        "next": [
+            "PassClaimed",
+            "[JumpBack]PassClaimAll",
+            "[JumpBack]RewardConfirm"
+        ]
+    },
+    "PassClaimed": {
+        "desc": "已领取",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": [
+                    553,
+                    655,
+                    175,
+                    30
+                ],
+                "lower": [
+                    100,
+                    100,
+                    100
+                ],
+                "upper": [
+                    180,
+                    180,
+                    180
+                ],
+                "count": 500
+            }
+        },
+        "next": [
+            "PageClose"
+        ]
+    },
+    "PassClaimAll": {
+        "desc": "任务奖励领取",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    553,
+                    655,
+                    175,
+                    30
+                ],
+                "expected": [
+                    "全部领取"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        }
+    }
+}
