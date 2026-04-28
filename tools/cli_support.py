@@ -98,6 +98,11 @@ class Console:
         return cls.colorize(text, Ansi.RED)
 
     @classmethod
+    def step(cls, text: str) -> str:
+        """Return a step label string, e.g. for multi-step CLI workflows."""
+        return cls.colorize(text, Ansi.MAGENTA)
+
+    @classmethod
     def info(cls, text: str) -> str:
         return cls.colorize(text, Ansi.CYAN)
 

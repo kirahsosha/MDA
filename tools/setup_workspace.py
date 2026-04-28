@@ -20,6 +20,11 @@ MXU_REPO: str = "MistEO/MXU"
 
 
 def create_directory_link(src: Path, dst: Path) -> bool:
+    """
+    在指定位置创建一个指定目录的链接
+    - Windows：Junction
+    - Unix/macOS：symlink
+    """
     if dst.exists() or dst.is_symlink():
         if dst.is_dir() and not dst.is_symlink():
             try:
@@ -136,6 +141,15 @@ def update_submodules(skip_if_exist: bool = True) -> bool:
 
     print(Console.info(t("inf_updating_submodules")))
     return run_command(["git", "submodule", "update", "--init", "--recursive"])
+
+
+def run_build_script(ci_mode: bool = False) -> bool:
+    """执行 build_and_install.py"""
+    print(Console.hdr(t("inf_run_build_script")))
+    cmd = [sys.executable, str(PROJECT_BASE / "tools" / "build_and_install.py")]
+    if ci_mode:
+        cmd.append("--ci")
+    return run_command(cmd)
 
 
 def get_latest_release_url(
@@ -675,162 +689,6 @@ def install_mxu(
             return False, local_version, False
 
 
-def build_go_agent() -> bool:
-    """Build the Go Agent binary for the current platform."""
-    go_service_dir = PROJECT_BASE / "agent" / "go-service"
-    if not go_service_dir.exists():
-        print(Console.err(t("err_go_service_not_found", path=go_service_dir)))
-        return False
-
-    system = platform.system().lower()
-    goos = {"windows": "windows", "darwin": "darwin"}.get(system, "linux")
-
-    machine = platform.machine().lower()
-    goarch = (
-        "amd64"
-        if machine in ("x86_64", "amd64")
-        else "arm64"
-        if machine in ("aarch64", "arm64")
-        else machine
-    )
-
-    ext = ".exe" if goos == "windows" else ""
-
-    install_dir = PROJECT_BASE / "install"
-    agent_dir = install_dir / "agent"
-    agent_dir.mkdir(parents=True, exist_ok=True)
-    output_path = agent_dir / f"go-service{ext}"
-
-    print(Console.info(t("inf_go_build_info", goos=goos, goarch=goarch, output=output_path)))
-
-    env = {**os.environ, "GOOS": goos, "GOARCH": goarch, "CGO_ENABLED": "0"}
-
-    # go mod tidy
-    print(Console.info(t("inf_running_go_mod_tidy")))
-    tidy_result = subprocess.run(
-        ["go", "mod", "tidy"],
-        cwd=go_service_dir,
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        env=env,
-    )
-    if tidy_result.returncode != 0:
-        print(Console.err(t("err_go_mod_tidy_failed", stderr=tidy_result.stderr)))
-        return False
-
-    # go build
-    build_cmd = [
-        "go",
-        "build",
-        "-trimpath",
-        "-o",
-        str(output_path),
-        ".",
-    ]
-
-    return run_command(build_cmd, cwd=go_service_dir)
-
-
-def configure_ocr_model() -> bool:
-    """Configure OCR model by copying from MaaCommonAssets."""
-    assets_dir = PROJECT_BASE / "assets"
-    assets_ocr_dir = assets_dir / "MaaCommonAssets" / "OCR"
-    if not assets_ocr_dir.exists():
-        print(Console.warn(t("wrn_ocr_assets_not_found", path=assets_ocr_dir)))
-        return True  # Non-fatal
-
-    ocr_dir = assets_dir / "resource" / "model" / "ocr"
-    if not ocr_dir.exists():
-        shutil.copytree(
-            assets_dir / "MaaCommonAssets" / "OCR" / "ppocr_v5" / "zh_cn",
-            ocr_dir,
-            dirs_exist_ok=True,
-        )
-        print(Console.ok(t("inf_ocr_model_configured")))
-    else:
-        print(Console.ok(t("inf_ocr_model_exists")))
-    return True
-
-
-def install_resource() -> bool:
-    """Install resource files to install directory."""
-    install_dir = PROJECT_BASE / "install"
-    assets_dir = PROJECT_BASE / "assets"
-
-    # Copy resource
-    if (assets_dir / "resource").exists():
-        shutil.copytree(
-            assets_dir / "resource",
-            install_dir / "resource",
-            dirs_exist_ok=True,
-        )
-        print(Console.ok(t("inf_resource_installed")))
-
-    # Copy tasks
-    if (assets_dir / "tasks").exists():
-        shutil.copytree(
-            assets_dir / "tasks",
-            install_dir / "tasks",
-            dirs_exist_ok=True,
-        )
-
-    # Copy locales (interface + go-service)
-    if (assets_dir / "locales").exists():
-        shutil.copytree(
-            assets_dir / "locales",
-            install_dir / "locales",
-            dirs_exist_ok=True,
-        )
-
-    # Copy interface.json
-    if (assets_dir / "interface.json").exists():
-        shutil.copy2(
-            assets_dir / "interface.json",
-            install_dir,
-        )
-
-    maafw_path = install_dir / "maafw"
-
-    # If install/maafw is a junction/symlink to deps/bin, skip copying —
-    # the link already makes all DLLs accessible. Copying into it would
-    # be copying a directory into itself and would fail if files are locked.
-    maafw_is_link = maafw_path.is_symlink()
-    if hasattr(maafw_path, 'is_junction'):
-        maafw_is_link = maafw_is_link or maafw_path.is_junction()
-
-    if not maafw_is_link:
-        # Copy deps MaaAgentBinary to install/maafw/
-        agent_binary_src = PROJECT_BASE / "deps" / "share" / "MaaAgentBinary"
-        if agent_binary_src.exists() and maafw_path.exists():
-            shutil.copytree(
-                agent_binary_src,
-                maafw_path / "MaaAgentBinary",
-                dirs_exist_ok=True,
-            )
-
-        # Copy deps bin to install/maafw/ (excluding MaaNode)
-        deps_bin = PROJECT_BASE / "deps" / "bin"
-        if deps_bin.exists() and maafw_path.exists():
-            shutil.copytree(
-                deps_bin,
-                maafw_path,
-                ignore=shutil.ignore_patterns("*MaaNode*"),
-                dirs_exist_ok=True,
-            )
-    else:
-        # Junction already points to deps/bin — just ensure MaaAgentBinary is present
-        agent_binary_src = PROJECT_BASE / "deps" / "share" / "MaaAgentBinary"
-        if agent_binary_src.exists():
-            shutil.copytree(
-                agent_binary_src,
-                maafw_path / "MaaAgentBinary",
-                dirs_exist_ok=True,
-            )
-
-    return True
-
-
 def _is_cn_locale() -> bool:
     import locale as _locale
     loc = _locale.getlocale()
@@ -866,20 +724,18 @@ def main() -> None:
     print(Console.hdr(t("header_workspace_init")))
     configure_token()
 
+    # 1. Update submodules
     if not update_submodules(skip_if_exist=not args.update):
         print(Console.err(t("fatal_submodule_failed")))
         sys.exit(1)
 
-    print(Console.hdr(t("header_configure_ocr")))
-    if not configure_ocr_model():
-        print(Console.err(t("fatal_ocr_failed")))
-        sys.exit(1)
-
-    print(Console.hdr(t("header_build_go")))
-    if not build_go_agent():
+    # 2. Build and install (delegated to build_and_install.py)
+    print(Console.hdr(t("header_build_and_install")))
+    if not run_build_script(ci_mode=args.ci):
         print(Console.err(t("fatal_build_failed")))
         sys.exit(1)
 
+    # 3. Download MaaFramework & MXU
     print(Console.hdr(t("header_download_deps")))
     versions: dict[str, str] = dict(local_versions)
     any_downloaded = False
@@ -909,11 +765,6 @@ def main() -> None:
     if mxu_version:
         versions["mxu"] = mxu_version
     any_downloaded = any_downloaded or mxu_downloaded
-
-    print(Console.hdr(t("header_install_resource")))
-    if not install_resource():
-        print(Console.err(t("fatal_install_resource_failed")))
-        sys.exit(1)
 
     if not args.ci and any_downloaded:
         write_versions_file(version_file, versions)
