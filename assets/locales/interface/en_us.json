@@ -96,5 +96,6 @@
     "preset.DailyFull.label": "Daily Full",
     "preset.DailyFull.description": "Execute all daily tasks, including simulation room, arena, interception, tribe tower, etc.",
     "preset.QuickDaily.label": "Quick Daily",
-    "preset.QuickDaily.description": "Only execute simulation room, interception, advise, outpost, shop, and daily rewards"
+    "preset.QuickDaily.description": "Only execute simulation room, interception, advise, outpost, shop, and daily rewards",
+    "focus.ManualInterceptionBattle.Succeeded": "Interception battle has been refreshed, please start the battle manually"
 }

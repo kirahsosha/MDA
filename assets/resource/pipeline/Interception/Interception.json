@@ -74,7 +74,7 @@
             }
         },
         "focus": {
-            "Node.Recognition.Succeeded": "检测到拦截战已刷新，请手动开始拦截战"
+            "Node.Recognition.Succeeded": "$focus.ManualInterceptionBattle.Succeeded"
         }
     }
 }
