@@ -52,7 +52,7 @@
             "EndTask"
         ]
     },
-    "Purchase": {
+    "ShopConfirmPurchase": {
         "desc": "购买商品",
         "recognition": {
             "type": "TemplateMatch",

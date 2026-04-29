@@ -81,7 +81,7 @@
                         "Email": "Yes",
                         "RankingRewards": "Yes",
                         "Mission": "Yes",
-                        "Pass": "Yes",
+                        "DailyRewardsPassMain": "Yes",
                         "FreeRecruit": "Yes"
                     }
                 }

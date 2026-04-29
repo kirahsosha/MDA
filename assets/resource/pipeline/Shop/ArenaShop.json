@@ -4,7 +4,7 @@
         "max_hit": 1,
         "next": [
             "[JumpBack]ShopEnterArenaShop",
-            "[JumpBack]Purchase",
+            "[JumpBack]ShopConfirmPurchase",
             "[JumpBack]FireCodeManualPurchase",
             "[JumpBack]WaterCodeManualPurchase",
             "[JumpBack]WindCodeManualPurchase",

@@ -4,7 +4,7 @@
         "max_hit": 1,
         "next": [
             "[JumpBack]ShopEnterCommonShop",
-            "[JumpBack]Purchase",
+            "[JumpBack]ShopConfirmPurchase",
             "[JumpBack]FreeGoodsPurchase",
             "[JumpBack]CoreDustCasePurchase",
             "[JumpBack]FreeReset",
@@ -177,7 +177,7 @@
                     34
                 ],
                 "template": [
-                    "Shop/ShopCheckGem.png"
+                    "Shop/GemCheck.png"
                 ]
             }
         }

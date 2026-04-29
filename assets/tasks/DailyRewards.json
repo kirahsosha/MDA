@@ -10,7 +10,7 @@
                 "Email",
                 "RankingRewards",
                 "Mission",
-                "Pass",
+                "DailyRewardsPassMain",
                 "FreeRecruit"
             ],
             "group": [
@@ -107,14 +107,14 @@
                 }
             ]
         },
-        "Pass": {
+        "DailyRewardsPassMain": {
             "type": "switch",
-            "label": "$option.Pass.label",
+            "label": "$option.DailyRewardsPassMain.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "Pass": {
+                        "DailyRewardsPassMain": {
                             "enabled": true
                         }
                     }
@@ -122,7 +122,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "Pass": {
+                        "DailyRewardsPassMain": {
                             "enabled": false
                         }
                     }

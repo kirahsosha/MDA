@@ -5,9 +5,9 @@
         "timeout": 120000,
         "next": [
             "[JumpBack]CommonClosePage",
-            "[JumpBack]ServerConfirm",
-            "[JumpBack]DownloadConfirm",
-            "[JumpBack]LoginConfirm",
+            "[JumpBack]ServerCommonConfirmAction",
+            "[JumpBack]DownloadCommonConfirmAction",
+            "[JumpBack]LoginCommonConfirmAction",
             "[JumpBack]NavigationClickHomeButton",
             "[JumpBack]SkipPlot",
             "[JumpBack]CommonCloseSale",
@@ -16,7 +16,7 @@
             "[JumpBack]NavigationClickHall"
         ]
     },
-    "ServerConfirm": {
+    "ServerCommonConfirmAction": {
         "desc": "服务器确认",
         "recognition": {
             "type": "TemplateMatch",
@@ -28,7 +28,7 @@
                     37
                 ],
                 "template": [
-                    "Confirm.png"
+                    "ConfirmWithCircle.png"
                 ]
             }
         },
@@ -36,7 +36,7 @@
             "type": "Click"
         }
     },
-    "DownloadConfirm": {
+    "DownloadCommonConfirmAction": {
         "desc": "下载内容确认",
         "recognition": {
             "type": "TemplateMatch",
@@ -48,7 +48,7 @@
                     40
                 ],
                 "template": [
-                    "Confirm.png"
+                    "ConfirmWithCircle.png"
                 ]
             }
         },
@@ -56,7 +56,7 @@
             "type": "Click"
         }
     },
-    "LoginConfirm": {
+    "LoginCommonConfirmAction": {
         "desc": "确认已经完全加载",
         "recognition": {
             "type": "TemplateMatch",
@@ -144,28 +144,8 @@
             "type": "Click"
         },
         "next": [
-            "Confirm"
+            "CommonConfirmAction"
         ]
-    },
-    "Confirm": {
-        "desc": "确认",
-        "recognition": {
-            "type": "TemplateMatch",
-            "param": {
-                "roi": [
-                    617,
-                    390,
-                    122,
-                    121
-                ],
-                "template": [
-                    "ConfirmWithCircle.png"
-                ]
-            }
-        },
-        "action": {
-            "type": "Click"
-        }
     },
     "ActiveCheck": {
         "desc": "检测是否处于自由状态",
