@@ -1,34 +1,33 @@
 # Pipeline 节点命名规范
 
-本文档用于规范 MaaFramework 项目中 Pipeline 节点的命名方式，提升节点可读性、可维护性与跨模块一致性。
+本文档用于规范 MaaFramework Pipeline 节点命名方式，提升节点可读性、可维护性与跨模块一致性。
 
-Pipeline 节点名是 JSON 根对象中的 key，会被 `next`、`on_error`、`target`、`anchor`、`And` / `Or` 识别条件、`pipeline_override` 等字段引用。因此，节点名应稳定、明确，并能表达节点在流程中的职责。
+Pipeline 节点名是 JSON 根对象中的 key，会被 `next`、`on_error`、`target`、`anchor`、`And` / `Or` 识别条件、`pipeline_override` 等字段引用。因此，节点名应保持稳定、明确，并能表达节点在流程中的职责。
 
-## 基本原则
+## 总体原则
 
-节点名必须使用 **PascalCase**。
-
-推荐格式为：
+节点名必须使用 **PascalCase**，推荐格式为：
 
 ```text
 <Domain><ActionOrObject><Role>
 ```
 
-其中：
+各部分含义如下：
 
-- `Domain` 表示所属功能域或模块，例如 `DailyTask`、`Shop`、`Battle`、`Base`。
-- `ActionOrObject` 表示节点处理的动作、页面、对象或业务目标。
-- `Role` 表示节点在流程中的功能角色，例如 `Main`、`Flow`、`Enter`、`OnPage`、`Visible`、`Available`、`Selected`、`Confirm`、`Claim` 等。
-- `Detected` 仅用于少数非 UI、异常或算法信号类检测，不作为普通 UI 元素检测的默认后缀。
+| 部分             | 含义                                       | 示例                                               |
+| ---------------- | ------------------------------------------ | -------------------------------------------------- |
+| `Domain`         | 所属业务域、模块或共享域                   | `Common`、`Navigation`、`Shop`、`Battle`           |
+| `ActionOrObject` | 节点处理的动作、页面、对象、状态或业务目标 | `EnterExchangePage`、`RewardDialog`、`QuickBattle` |
+| `Role`           | 节点在流程中的功能角色                     | `Main`、`Flow`、`Visible`、`Available`、`Confirm`  |
 
-示例：
+推荐示例：
 
 ```text
 ShopEnterExchangePage
 ShopOnExchangePage
 BattleQuickBattleAvailable
 DailyTaskClaimMissionReward
-BaseConfirmReward
+CommonConfirmReward
 ```
 
 ## 禁止事项
@@ -43,14 +42,15 @@ shop_enter
 Flag_In_Shop
 ```
 
-具体禁止规则：
+具体规则：
 
 1. 不得以下划线 `_` 开头。
 2. 不得以数字开头。
 3. 不得使用 `snake_case`、`camelCase` 或混合分隔符。
 4. 不得使用无业务语义的临时编号，例如 `Node1`、`Check2`。
-5. 不得仅用过于泛化的名称，例如 `Confirm`、`Check`、`Click`。
+5. 不得仅使用过于泛化的名称，例如 `Confirm`、`Check`、`Click`。
 6. 不使用 `FlagInX` 作为新节点名；页面状态应使用 `On...Page` 或 `Visible` 表达。
+7. 重命名节点时，不应修改与识别或动作逻辑相关的业务参数，例如 `expected`、`roi`、`template`、`target` 等，除非修改目标本身就是功能调整。
 
 ## Domain 命名
 
@@ -58,16 +58,19 @@ Flag_In_Shop
 
 常见 Domain 示例：
 
-| Domain       | 用途                                         |
-| ------------ | -------------------------------------------- |
-| `Base`       | 全局通用节点，例如确认、关闭、返回、空白点击 |
-| `Navigation` | 跨模块导航、回到首页、进入主功能区等         |
-| `Shop`       | 商店相关流程                                 |
-| `Battle`     | 战斗相关流程                                 |
-| `DailyTask`  | 日常任务相关流程                             |
-| `Event`      | 活动相关流程                                 |
+| Domain       | 用途                                             |
+| ------------ | ------------------------------------------------ |
+| `Common`     | 全局通用 UI 操作，例如确认、关闭、返回、空白点击 |
+| `Navigation` | 跨模块导航、回到首页、进入主功能区等             |
+| `Login`      | 登录、启动、下载确认、登录奖励等启动阶段流程     |
+| `Shop`       | 商店相关流程                                     |
+| `Battle`     | 战斗相关流程                                     |
+| `DailyTask`  | 日常任务相关流程                                 |
+| `Event`      | 活动相关流程                                     |
 
-同一项目内应保持共享域命名一致。例如选择 `Base` 作为通用域后，不应同时混用 `Common`、`Global` 表达同一类节点。
+共享域名称应保持唯一和一致。若选择 `Common` 表达全局通用 UI 操作，就不应同时使用 `Base`、`Global` 表达同一类节点。
+
+业务域应尽量稳定，不要随具体识别方式变化。例如按钮从 OCR 改为模板匹配后，节点名不应因此从 `Visible` 改为 `Detected`。
 
 ## 节点角色命名
 
@@ -107,15 +110,15 @@ DailyTaskClaimRewardFlow
 EventLoginRewardFlow
 ```
 
-适用场景：
+示例：
 
 ```json
 {
     "ShopPurchaseItemFlow": {
         "next": [
             "ShopPurchaseDialogVisible",
-            "[JumpBack]BaseConfirmAction",
-            "BaseConfirmReward"
+            "[JumpBack]CommonConfirmAction",
+            "CommonConfirmReward"
         ]
     }
 }
@@ -150,7 +153,7 @@ EnterMission
 
 ### 页面状态节点
 
-用于判断当前是否处于某页面、某界面、某弹窗的节点，使用：
+用于判断当前是否处于某页面、界面或弹窗的节点，使用：
 
 ```text
 <Domain>On<Page>Page
@@ -168,7 +171,7 @@ EnterMission
 ShopOnExchangePage
 BattleOnStagePage
 DailyTaskMissionPageVisible
-BaseRewardDialogVisible
+CommonRewardDialogVisible
 ```
 
 不要使用：
@@ -181,9 +184,13 @@ FlagInMission
 
 页面状态应描述“处于哪个页面”或“哪个 UI 对象可见”，而不是描述内部标记。
 
+不要过度解耦页面状态节点。`Visible` 节点只有在被多个流程复用、作为 `And` / `Or` 子条件复用，或需要被 `pipeline_override` 单独控制时，才有必要独立存在。若页面状态只服务于单个进入页面节点，应优先并入该进入页面节点，避免产生只被使用一次的中转检测节点。
+
 ### 纯检测节点
 
-只负责识别某个元素、状态、文本、红点，不执行动作的节点，优先使用能表达业务状态的后缀。普通 UI 元素、页面文字、按钮、红点、图标等“界面上可见”的对象，默认使用 `Visible`，不要使用 `Detected` 暴露底层识别实现。
+只负责识别某个元素、状态、文本、红点，不执行动作的节点，优先使用能表达业务状态的后缀。
+
+普通 UI 元素、页面文字、按钮、红点、图标等“界面上可见”的对象，默认使用 `Visible`，不要使用 `Detected` 暴露底层识别实现。
 
 ```text
 <Domain><Object>Visible
@@ -218,13 +225,6 @@ BattleScreenFreezeDetected
 | `Exhausted` | 次数、资源、机会已耗尽                                                                                   |
 | `Detected`  | 非 UI 的异常、状态、算法信号被检测到；仅在 `Visible` / `Available` / `Selected` 等业务后缀都不准确时使用 |
 
-`Visible` 与 `Detected` 的取舍规则：
-
-- 看到界面元素：使用 `Visible`，例如 `BaseRewardDialogVisible`、`DailyTaskRedDotVisible`。
-- 功能是否可点、次数是否可用：使用 `Available`，例如 `BattleQuickBattleAvailable`。
-- 选项是否处于选中态：使用 `Selected`，例如 `ShopItemSelected`。
-- 检测异常、冻结、颜色异常、算法信号等非 UI 语义：才使用 `Detected`，例如 `BattleScreenFreezeDetected`、`ColorAnomalyDetected`。
-
 ### 点击/选择节点
 
 执行点击、选择、领取等动作的节点，使用动词前置：
@@ -241,11 +241,11 @@ BattleScreenFreezeDetected
 示例：
 
 ```text
-BaseClickBlank
+CommonClickBlank
 ShopPurchaseFreeItem
 BattleSelectStage
 DailyTaskClaimMissionReward
-BaseClosePage
+CommonClosePage
 ```
 
 不要使用：
@@ -267,8 +267,8 @@ FreeRecruitClick
 示例：
 
 ```text
-BaseConfirmAction
-BaseConfirmReward
+CommonConfirmAction
+CommonConfirmReward
 ShopConfirmPurchase
 BattleConfirmRetreat
 ```
@@ -294,7 +294,7 @@ ConfirmEnd
 示例：
 
 ```text
-BaseScrollUp
+CommonScrollUp
 ShopScrollItemListDown
 EventSwipeBanner
 BattleSwipeStageListLeft
@@ -322,25 +322,25 @@ ListSwipe
 ```text
 ShopEnd
 BattleEnd
-BaseEndTask
+CommonEndTask
 ```
 
-如果项目只需要一个全局终止节点，推荐使用 `BaseEndTask`。
+如果只需要一个全局终止节点，推荐使用 `CommonEndTask`。
 
 ## 共享节点命名
 
 共享节点是跨模块复用的节点，应使用稳定的共享 Domain 前缀，避免和业务模块节点混淆。
 
-推荐使用 `Base` 表示通用 UI 操作：
+推荐使用 `Common` 表示通用 UI 操作：
 
 ```text
-BaseConfirmReward
-BaseConfirmAction
-BaseClosePage
-BaseClickBlank
-BaseGoBack
-BaseScrollUp
-BaseEndTask
+CommonConfirmReward
+CommonConfirmAction
+CommonClosePage
+CommonClickBlank
+CommonGoBack
+CommonScrollUp
+CommonEndTask
 ```
 
 推荐使用 `Navigation` 表示跨模块导航：
@@ -353,7 +353,18 @@ NavigationOnHomePage
 NavigationMainAreaVisible
 ```
 
-共享域名称应在项目内保持唯一和一致。不要同时混用 `Base`、`Common`、`Global` 表达同一类通用节点。
+推荐使用 `Login` 表示登录或启动阶段流程：
+
+```text
+LoginConfirmServer
+LoginConfirmDownload
+LoginConfirmLogin
+LoginReward
+LoginRewardClaimed
+LoginRewardClose
+```
+
+共享域名称应保持唯一和一致。不要同时混用 `Base`、`Common`、`Global` 表达同一类通用节点。
 
 ## 重命名检查清单
 
@@ -369,8 +380,8 @@ NavigationMainAreaVisible
 8. `recognition.type = "And"` 中的 `all_of`。
 9. `recognition.type = "Or"` 中的 `any_of`。
 10. `pipeline_override`。
-11. 项目接口或任务配置中的任务入口与 Pipeline 覆盖配置。
-12. 构建产物、安装资源或镜像资源中的重复 Pipeline 文件。
+11. Project Interface 或任务配置中的任务入口与 Pipeline 覆盖配置。
+12. 构建产物、安装资源、镜像资源或重复资源包中的 Pipeline 文件。
 
 ## 命名示例
 
@@ -404,7 +415,7 @@ NavigationMainAreaVisible
         },
         "next": [
             "[JumpBack]ShopPurchaseItemFlow",
-            "BaseEndTask"
+            "CommonEndTask"
         ]
     }
 }
@@ -418,7 +429,8 @@ NavigationMainAreaVisible
     "EnterShop": {},
     "FlagInShop": {},
     "_Shop1": {},
-    "25Check": {}
+    "25Check": {},
+    "Confirm": {}
 }
 ```
 
@@ -439,7 +451,7 @@ ShopEnterExchangePage
 ShopOnExchangePage
 BattleQuickBattleAvailable
 DailyTaskMissionClaimed
-BaseConfirmReward
+CommonConfirmReward
 ```
 
 避免风格：
