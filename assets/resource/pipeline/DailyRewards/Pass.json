@@ -3,9 +3,32 @@
         "desc": "Pass入口",
         "max_hit": 1,
         "next": [
+            "[JumpBack]DailyRewardsPassChangeClick",
             "DailyRewardsPassStart",
             "CommonEndTask"
         ]
+    },
+    "DailyRewardsPassChangeClick": {
+        "desc": "点击更换pass", //确保其一定时间内不会再次更换，防止出现在更换途中识别导致失败的情况
+        "max_hit": 1,
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1116,
+                    91,
+                    163,
+                    66
+                ],
+                "template": [
+                    "DailyRewards/Pass/PassChange.png"
+                ]
+            }
+        },
+        "action": {
+            "type": "Click"
+        },
+        "post_wait_freezes": 500
     },
     "DailyRewardsPassStart": {
         "desc": "Pass入口",
