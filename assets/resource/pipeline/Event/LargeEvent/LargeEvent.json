@@ -57,7 +57,15 @@
                 ]
             }
         },
-        "pre_wait_freezes": 1000,
+        "pre_wait_freezes": {
+            "time": 500,
+            "target": [
+                446,
+                539,
+                389,
+                82
+            ]
+        },
         "action": "DoNothing",
         "next": [
             "[JumpBack]LargeEventLoginStamp",
