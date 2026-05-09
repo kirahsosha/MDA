@@ -52,6 +52,7 @@
             "[JumpBack]DailyRewardsClickPassRedDot",
             "[JumpBack]DailyRewardsEnterPass",
             "DailyRewardsPassStart",
+            "[JumpBack]CommonClosePage",
             "CommonEndTask"
         ]
     },
