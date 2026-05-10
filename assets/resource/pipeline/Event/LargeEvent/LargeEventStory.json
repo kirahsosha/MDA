@@ -1,6 +1,6 @@
 {
     "LargeEventStory": {
-        "timeout": 30000,
+        "timeout": 60000,
         "max_hit": 1,
         "desc": "大活动剧情",
         "enabled": false,

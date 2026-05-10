@@ -1,6 +1,7 @@
 {
     "LargeEventChallenge": {
         "max_hit": 1,
+        "timeout": 60000,
         "desc": "大活动挑战",
         "enabled": false,
         "recognition": {

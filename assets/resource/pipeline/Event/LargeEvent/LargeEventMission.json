@@ -1,6 +1,7 @@
 {
     "LargeEventMission": {
         "max_hit": 1,
+        "timeout": 60000,
         "desc": "大活动任务",
         "enabled": false,
         "recognition": {
