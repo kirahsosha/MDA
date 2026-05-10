@@ -110,7 +110,7 @@
         },
         "next": [
             "AdviseChooseNikke",
-            "AdviseStart"
+            "AdviseFlow"
         ]
     },
     "AdviseMainPageEntered": {
