@@ -136,7 +136,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "DailyRewardsFreeRecruitEntry": {
+                        "DailyRewardsFreeRecruitMain": {
                             "enabled": true
                         }
                     }
@@ -144,7 +144,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "DailyRewardsFreeRecruitEntry": {
+                        "DailyRewardsFreeRecruitMain": {
                             "enabled": false
                         }
                     }
