@@ -221,12 +221,7 @@
         "recognition": {
             "type": "ColorMatch",
             "param": {
-                "roi": [
-                    553,
-                    652,
-                    172,
-                    26
-                ],
+                "roi": "DailyRewardsPassTextVisible",
                 "lower": [
                     200,
                     200,
