@@ -100,6 +100,12 @@ func checkMembership() *MembershipStatus {
 		IsMember:       false,
 	}
 
+	// 外部链接与自动远程校验已移除：不再访问远端会员数据接口。
+	// 保留本地默认状态，避免任何外部网络请求。
+	if !enableRemoteMembershipCheck {
+		return defaultStatus
+	}
+
 	// Debug versions (below 1.0.0) bypass membership verification
 	if isDebugVersion() {
 		log.Info().Str("version", appVersion).Msg("Debug version detected, bypassing membership verification")

@@ -148,32 +148,7 @@ jobs:
         if: ${{ !(matrix.os == 'linux' && matrix.arch == 'aarch64') }}
         shell: bash
         run: |
-          if [ -d "MXU" ]; then
-            echo "Integrating MXU into install directory..."
-
-            # 先把 MXU 可执行文件统一落到最终命名，避免后续步骤改错目标文件
-            if [[ "${{ matrix.os }}" == "win" ]]; then
-              if [ -f "MXU/mxu.exe" ]; then
-                cp "MXU/mxu.exe" "install/MDA.exe"
-                echo "Copied MXU executable to install/MDA.exe"
-              fi
-            else
-              if [ -f "MXU/mxu" ]; then
-                cp "MXU/mxu" "install/MDA"
-                echo "Copied MXU executable to install/MDA"
-              fi
-            fi
-
-            # 再复制 MXU 其余必要文件，保持目录结构一致
-            for dir in $(find MXU -maxdepth 1 -type d ! -name "." ! -name ".." | head -20); do
-              if [ -d "$dir" ] && [ $(basename "$dir") != "MXU" ]; then
-                cp -r "$dir" install/
-              fi
-            done
-            echo "MXU integration completed."
-          else
-            echo "MXU directory not found, skipping MXU integration."
-          fi
+          python tools/mxu_integration.py --mxu-root MXU --install-root install
 
       - name: Convert PNG to ICO
         if: matrix.os == 'win' && matrix.arch == 'x86_64'
@@ -203,6 +178,14 @@ jobs:
         run: |
           echo "Checking install directory contents..."
           ls -la install/ | head -20
+          if [[ "${{ matrix.os }}" == "win" ]]; then
+            if [ -f "install/MDA.exe" ]; then
+              echo "✅ MDA.exe found"
+            else
+              echo "❌ MDA.exe NOT found"
+              exit 1
+            fi
+          fi
           if [ -f "install/interface.json" ]; then
             echo "✅ interface.json found"
           else

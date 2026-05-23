@@ -488,3 +488,4 @@ tests/maatools
 # Local AI/code intelligence preferences
 .codegraph/
 .cursor/
+/dist

@@ -1,7 +1,8 @@
 {
     "scripts": {
         "utf8-cmd": "scripts\\utf8-cmd.cmd",
-        "format": "prettier --write ."
+        "package:win": "python tools/package_release.py --build --os win",
+        "format": "node scripts/clean-empty-pipeline-fields.mjs && prettier --write ."
     },
     "devDependencies": {
         "@biomejs/biome": "2.4.13",

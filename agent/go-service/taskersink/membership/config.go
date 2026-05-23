@@ -25,8 +25,12 @@ var monthlyCost = map[string]float64{
 	"金Doro企业版": 100,
 }
 
-// minMemberLevel is the minimum UserLevel required for member-only tasks in MDA.
-const minMemberLevel = 3 // Gold tier
+// minMemberLevel controls level-based gating in membership status calculation.
+// 会员等级限制已移除：原值为 3（Gold tier），现改为 0 以允许所有等级通过。
+const minMemberLevel = 0
 
-// MemberDataURL is the only data source for V6 membership data.
-const MemberDataURL = "https://doropay.top/api/members/v6"
+// enableRemoteMembershipCheck toggles remote membership verification.
+const enableRemoteMembershipCheck = false
+
+// MemberDataURL external endpoint has been disabled.
+const MemberDataURL = ""

@@ -12,6 +12,7 @@ from pathlib import Path
 import time
 
 from cli_support import Console, init_localization
+from mxu_integration import integrate_mxu_bundle
 
 
 PROJECT_BASE: Path = Path(__file__).parent.parent.resolve()
@@ -102,6 +103,7 @@ except KeyError as e:
     raise RuntimeError(f"Unsupported OS for MaaFramework: {OS_KEYWORD}") from e
 
 MXU_DIST_NAME: str = "mxu.exe" if OS_KEYWORD == "win" else "mxu"
+MXU_LAUNCHER_NAME: str = "MDA.exe" if OS_KEYWORD == "win" else "MDA"
 TIMEOUT: int = 30
 CACHE_DIR: Path = PROJECT_BASE / ".cache"
 VERSION_FILE_NAME: str = "version.json"
@@ -155,48 +157,9 @@ def run_build_script(ci_mode: bool = False) -> bool:
 def get_latest_release_url(
     repo: str, keywords: list[str], prerelease: bool = True
 ) -> tuple[str | None, str | None, str | None]:
-    api_url = f"https://api.github.com/repos/{repo}/releases"
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-
-    try:
-        print(Console.info(t("inf_get_latest_release", repo=repo)))
-
-        req = urllib.request.Request(api_url)
-        if token:
-            req.add_header("Authorization", f"Bearer {token}")
-        req.add_header("Accept", "application/vnd.github+json")
-        req.add_header("User-Agent", "MDA-setup")
-        req.add_header("X-GitHub-Api-Version", "2022-11-28")
-
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as res:
-            tags = json.loads(res.read().decode())
-            assert isinstance(tags, list)
-            if not tags:
-                raise ValueError("No releases found (GitHub API)")
-
-        for tag in tags:
-            assert isinstance(tag, dict)
-            if (
-                not prerelease
-                and tag.get("prerelease", False)
-                or tag.get("draft", False)
-            ):
-                continue
-            assets = tag.get("assets", [])
-            assert isinstance(assets, list)
-
-            for asset in assets:
-                assert isinstance(asset, dict)
-                name = asset["name"].lower()
-                if all(k.lower() in name for k in keywords):
-                    print(Console.ok(t("inf_matched_asset", name=asset["name"])))
-                    tag_name = tag.get("tag_name") or tag.get("name")
-                    return asset["browser_download_url"], asset["name"], tag_name
-
-        raise ValueError("No matching asset found in the latest release (GitHub API)")
-    except Exception as e:
-        print(Console.err(t("err_get_release_failed", error_type=type(e).__name__, error=e)))
-
+    # 自动版本更新与外部链接已移除。
+    # repo / keywords / prerelease 参数保留以兼容历史调用。
+    _ = repo, keywords, prerelease
     return None, None, None
 
 
@@ -510,6 +473,17 @@ def install_maafw(
     maafw_deps = PROJECT_BASE / "deps"
     maafw_installed = maafw_deps.exists() and any(maafw_deps.iterdir())
 
+    # 自动更新已移除：仅使用本地依赖，不再访问 GitHub Release。
+    # skip_if_exist / update_mode 参数保留以兼容原调用签名。
+    if maafw_installed:
+        print(Console.ok(t("inf_maafw_installed_skip")))
+        return True, local_version or "local", False
+    if maafw_dest.exists():
+        return True, local_version or "local", False
+    print(Console.err(t("err_maafw_url_not_found")))
+    print(Console.err("[ERR] Auto update disabled: MaaFramework local dependency not found."))
+    return False, local_version, False
+
     if skip_if_exist and maafw_installed:
         print(Console.ok(t("inf_maafw_installed_skip")))
         return True, local_version, False
@@ -610,9 +584,21 @@ def install_mxu(
 ) -> tuple[bool, str | None, bool]:
     real_install_root = install_root.resolve()
     mxu_path = real_install_root / MXU_DIST_NAME
-    mxu_installed = mxu_path.exists()
+    launcher_path = real_install_root / MXU_LAUNCHER_NAME
+    launcher_installed = launcher_path.exists()
 
-    if skip_if_exist and mxu_installed:
+    # 自动更新已移除：仅使用本地安装目录，不再访问 GitHub Release。
+    # skip_if_exist / update_mode 参数保留以兼容原调用签名。
+    if launcher_installed:
+        print(Console.ok(t("inf_mxu_installed_skip")))
+        return True, local_version or "local", False
+    if mxu_path.exists():
+        return True, local_version or "local", False
+    print(Console.err(t("err_mxu_url_not_found")))
+    print(Console.err("[ERR] Auto update disabled: MXU local executable not found."))
+    return False, local_version, False
+
+    if skip_if_exist and launcher_installed:
         print(Console.ok(t("inf_mxu_installed_skip")))
         return True, local_version, False
 
@@ -625,7 +611,7 @@ def install_mxu(
 
     if (
         update_mode
-        and mxu_installed
+        and launcher_installed
         and local_version
         and remote_version
         and compare_semver(local_version, remote_version) >= 0
@@ -641,15 +627,17 @@ def install_mxu(
     with tempfile.TemporaryDirectory() as tmp_dir:
         tmp_path = Path(tmp_dir)
 
-        if mxu_path.exists():
+        for stale_path in (mxu_path, launcher_path):
+            if not stale_path.exists():
+                continue
             while True:
                 try:
-                    print(Console.info(t("inf_delete_old_file", path=mxu_path)))
-                    mxu_path.unlink()
+                    print(Console.info(t("inf_delete_old_file", path=stale_path)))
+                    stale_path.unlink()
                     break
                 except PermissionError as e:
                     print(Console.err(t("err_permission_denied", error=e)))
-                    print(Console.err(t("err_cannot_delete_mxu", name=MXU_DIST_NAME)))
+                    print(Console.err(t("err_cannot_delete_mxu", name=stale_path.name)))
                     cmd = input(t("prompt_retry_or_quit")).strip().lower()
                     if cmd == "q":
                         return False, local_version, False
@@ -664,26 +652,21 @@ def install_mxu(
 
             shutil.unpack_archive(str(download_path), extract_root)
 
-            real_install_root.mkdir(parents=True, exist_ok=True)
-            target_files = [MXU_DIST_NAME]
-            if OS_KEYWORD == "win":
-                target_files.append("mxu.pdb")
-
-            copied = False
-            for item in extract_root.iterdir():
-                if item.name.lower() in [f.lower() for f in target_files]:
-                    dest = real_install_root / item.name
-                    shutil.copy2(item, dest)
-                    print(Console.ok(t("inf_updated_file", name=item.name)))
-                    if item.name.lower() == MXU_DIST_NAME.lower():
-                        copied = True
-
-            if not copied:
-                print(Console.err(t("err_mxu_not_found", name=MXU_DIST_NAME)))
-                return False, local_version, False
+            integrated_paths = integrate_mxu_bundle(
+                extract_root,
+                real_install_root,
+                target_name=MXU_LAUNCHER_NAME,
+            )
+            for key in ("original_executable", "renamed_executable"):
+                integrated_path = integrated_paths.get(key)
+                if integrated_path is not None:
+                    print(Console.ok(t("inf_updated_file", name=integrated_path.name)))
             print(Console.ok(t("inf_mxu_install_complete")))
             cleanup_cache_file(download_path)
             return True, remote_version or local_version, True
+        except FileNotFoundError:
+            print(Console.err(t("err_mxu_not_found", name=MXU_DIST_NAME)))
+            return False, local_version, False
         except Exception as e:
             print(Console.err(t("err_mxu_install_failed", error=e)))
             return False, local_version, False
@@ -770,7 +753,7 @@ def main() -> None:
         write_versions_file(version_file, versions)
 
     print(Console.ok(t("header_setup_complete")))
-    print(Console.info(t("inf_workspace_ready", mxu_path=install_dir / MXU_DIST_NAME)))
+    print(Console.info(t("inf_workspace_ready", mxu_path=install_dir / MXU_LAUNCHER_NAME)))
     print(Console.info(t("inf_install_dir_hint", install_dir=install_dir)))
 
 

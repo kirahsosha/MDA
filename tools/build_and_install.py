@@ -2,6 +2,7 @@ import argparse
 import os
 import platform
 import shutil
+import stat
 import subprocess
 import sys
 from pathlib import Path
@@ -28,6 +29,63 @@ def t(key: str, **kwargs) -> str:
     return _local_t(key, **kwargs)
 
 
+def is_path_link(path: Path) -> bool:
+    if path.is_symlink():
+        return True
+    return bool(getattr(path, "is_junction", lambda: False)())
+
+
+def is_windows_reparse_point(path: Path) -> bool:
+    if platform.system() != "Windows":
+        return False
+    try:
+        return bool(path.lstat().st_file_attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT)
+    except (AttributeError, OSError, ValueError):
+        return False
+
+
+def clear_windows_readonly(path: Path) -> None:
+    if platform.system() != "Windows":
+        return
+    try:
+        attributes = path.lstat().st_file_attributes
+    except (AttributeError, OSError, ValueError):
+        return
+    if attributes & stat.FILE_ATTRIBUTE_READONLY:
+        os.chmod(path, stat.S_IWRITE | stat.S_IREAD)
+
+
+def remove_path(path: Path) -> None:
+    if not path.exists() and not path.is_symlink():
+        return
+
+    clear_windows_readonly(path)
+
+    if is_path_link(path):
+        if path.is_dir():
+            path.rmdir()
+        else:
+            path.unlink(missing_ok=True)
+        return
+
+    if path.is_dir():
+        if is_windows_reparse_point(path):
+            try:
+                path.rmdir()
+                return
+            except OSError:
+                pass
+
+        for child in path.iterdir():
+            remove_path(child)
+
+        clear_windows_readonly(path)
+        path.rmdir()
+        return
+
+    path.unlink(missing_ok=True)
+
+
 def create_directory_link(src: Path, dst: Path) -> bool:
     """
     在指定位置创建一个指定目录的链接
@@ -35,13 +93,7 @@ def create_directory_link(src: Path, dst: Path) -> bool:
     - Unix/macOS：symlink
     """
     if dst.exists() or dst.is_symlink():
-        if dst.is_dir() and not dst.is_symlink():
-            try:
-                dst.rmdir()
-            except OSError:
-                shutil.rmtree(dst)
-        else:
-            dst.unlink(missing_ok=True)
+        remove_path(dst)
 
     dst.parent.mkdir(parents=True, exist_ok=True)
 
@@ -65,7 +117,7 @@ def create_directory_link(src: Path, dst: Path) -> bool:
 def create_file_link(src: Path, dst: Path) -> bool:
     """创建文件链接（硬链接优先）"""
     if dst.exists() or dst.is_symlink():
-        dst.unlink(missing_ok=True)
+        remove_path(dst)
 
     dst.parent.mkdir(parents=True, exist_ok=True)
 
@@ -98,13 +150,15 @@ def create_file_link(src: Path, dst: Path) -> bool:
 def copy_directory(src: Path, dst: Path) -> bool:
     """复制目录（替换）"""
     if dst.exists():
-        shutil.rmtree(dst)
+        remove_path(dst)
     shutil.copytree(src, dst)
     return True
 
 
 def copy_file(src: Path, dst: Path) -> bool:
     """复制文件"""
+    if dst.exists() or dst.is_symlink():
+        remove_path(dst)
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
     return True
