@@ -53,11 +53,11 @@
             }
         },
         "next": [
-            "InterceptionChallenge"
+            "InterceptionChallengeClick"
         ]
     },
-    "InterceptionChallenge": {
-        "desc": "挑战",
+    "InterceptionChallengeClick": {
+        "desc": "点击挑战",
         "recognition": {
             "type": "OCR",
             "param": {
@@ -75,8 +75,31 @@
         "action": {
             "type": "Click"
         },
+        "post_wait_freezes": 200,
         "next": [
-            "BattleStart"
+            "BattleCannotBattle",
+            "[JumpBack]InterceptionChallengeBattle"
+        ]
+    },
+    "InterceptionChallengeBattle": {
+        "desc": "挑战页面战斗",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    487,
+                    470,
+                    102,
+                    20
+                ],
+                "expected": [
+                    ".*异常.*"
+                ]
+            }
+        },
+        "next": [
+            "BattleStart",
+            "CommonEndTask"
         ]
     },
     "InterceptionAnomalyMirrorContainer": {
@@ -97,7 +120,7 @@
             }
         },
         "next": [
-            "InterceptionChallenge"
+            "InterceptionChallengeClick"
         ]
     },
     "InterceptionAnomalyIndivilia": {
@@ -118,7 +141,7 @@
             }
         },
         "next": [
-            "InterceptionChallenge"
+            "InterceptionChallengeClick"
         ]
     },
     "InterceptionAnomalyHarvester": {
@@ -139,7 +162,7 @@
             }
         },
         "next": [
-            "InterceptionChallenge"
+            "InterceptionChallengeClick"
         ]
     },
     "InterceptionAnomalyUltra": {
@@ -160,7 +183,7 @@
             }
         },
         "next": [
-            "InterceptionChallenge"
+            "InterceptionChallengeClick"
         ]
     },
     "InterceptionNextAnomaly": {
