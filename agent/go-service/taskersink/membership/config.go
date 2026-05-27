@@ -9,19 +9,19 @@ var unsupportedTiers = map[string]bool{
 
 // membershipLevels maps tier names to their numeric user level.
 var membershipLevels = map[string]int{
-	"普通用户":      0,
-	"铜Doro会员":    1,
-	"银Doro会员":    2,
-	"金Doro会员":    3,
+	"普通用户":     0,
+	"铜Doro会员":  1,
+	"银Doro会员":  2,
+	"金Doro会员":  3,
 	"金Doro企业版": 4,
 }
 
 // monthlyCost maps tier names to their monthly cost in ORANGE units.
 var monthlyCost = map[string]float64{
-	"普通用户":      0,
-	"铜Doro会员":    1,
-	"银Doro会员":    3,
-	"金Doro会员":    5,
+	"普通用户":     0,
+	"铜Doro会员":  1,
+	"银Doro会员":  3,
+	"金Doro会员":  5,
 	"金Doro企业版": 100,
 }
 

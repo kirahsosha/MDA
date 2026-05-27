@@ -16,17 +16,24 @@ var _ maa.CustomActionRunner = &MembershipCheckAction{}
 func (a *MembershipCheckAction) Run(_ *maa.Context, _ *maa.CustomActionArg) bool {
 	status := GetMembershipStatus()
 
-	if status.UnsupportedTier {
-		log.Warn().
-			Str("tier", status.MembershipType).
-			Msg("MembershipCheck: unsupported tier")
-	}
+	// 构建赞助链接（无论是否会员都显示）
+	// sponsorURL := fmt.Sprintf(
+	// 	"https://doropay.top?cpu=%s&uuid=%s&bios=%s&board=%s&disk=%s&guid=%s",
+	// 	status.DeviceCode.CPUHash,
+	// 	status.DeviceCode.UUIDHash,
+	// 	status.DeviceCode.BIOSHash,
+	// 	status.DeviceCode.BoardHash,
+	// 	status.DeviceCode.DiskHash,
+	// 	status.DeviceCode.GUIDHash,
+	// )
 
 	if status.IsMember {
 		log.Info().
-			Str("tier", status.MembershipType).
-			Int("level", status.UserLevel).
-			Str("expiry", status.VirtualExpiry).
+			Str("tier", status.Tier).
+			Str("plan_code", status.PlanCode).
+			Str("plan_name", status.PlanName).
+			Str("expiry", status.ExpiresOn).
+			Int("remaining_days", status.RemainingDays).
 			Msg("MembershipCheck: member verified, allowing")
 
 		// 赞助提示已移除。
