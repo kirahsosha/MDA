@@ -1,23 +1,14 @@
 import argparse
-import os
 import sys
 import shutil
 import subprocess
 import platform
-import urllib.request
-import urllib.error
-import json
-import tempfile
 from pathlib import Path
-import time
 
 from cli_support import Console, init_localization
-from mxu_integration import integrate_mxu_bundle
 
 
 PROJECT_BASE: Path = Path(__file__).parent.parent.resolve()
-MFW_REPO: str = "MaaXYZ/MaaFramework"
-MXU_REPO: str = "MistEO/MXU"
 
 
 def create_directory_link(src: Path, dst: Path) -> bool:
@@ -104,19 +95,12 @@ except KeyError as e:
 
 MXU_DIST_NAME: str = "mxu.exe" if OS_KEYWORD == "win" else "mxu"
 MXU_LAUNCHER_NAME: str = "MDA.exe" if OS_KEYWORD == "win" else "MDA"
-TIMEOUT: int = 30
 CACHE_DIR: Path = PROJECT_BASE / ".cache"
-VERSION_FILE_NAME: str = "version.json"
 
 
 def configure_token() -> None:
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-    if token:
-        print(Console.ok(t("inf_github_token_configured")))
-    else:
-        print(Console.warn(t("wrn_github_token_not_configured")))
-        print(Console.info(t("inf_github_token_hint")))
-    print("-" * 40)
+    # 自动更新逻辑已移除，保留函数名仅为兼容旧调用面。
+    return None
 
 
 def run_command(
@@ -154,143 +138,6 @@ def run_build_script(ci_mode: bool = False) -> bool:
     return run_command(cmd)
 
 
-def get_latest_release_url(
-    repo: str, keywords: list[str], prerelease: bool = True
-) -> tuple[str | None, str | None, str | None]:
-    # 自动版本更新与外部链接已移除。
-    # repo / keywords / prerelease 参数保留以兼容历史调用。
-    _ = repo, keywords, prerelease
-    return None, None, None
-
-
-def read_versions_file(path: Path) -> dict[str, str]:
-    if not path.exists():
-        return {}
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        versions = data.get("versions", {})
-        if isinstance(versions, dict):
-            return {str(k): str(v) for k, v in versions.items()}
-    except Exception as e:
-        print(Console.warn(t("wrn_read_version_failed", error=e)))
-    return {}
-
-
-def write_versions_file(path: Path, versions: dict[str, str]) -> None:
-    try:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump({"versions": versions}, f, ensure_ascii=False, indent=4)
-        print(Console.ok(t("inf_write_version_file", path=path)))
-        print(Console.info(t("inf_current_versions", versions=versions)))
-    except Exception as e:
-        print(Console.warn(t("wrn_write_version_failed", error=e)))
-
-
-def parse_semver(version: str) -> tuple[list[int], list[str]]:
-    if not version:
-        return [], []
-
-    v = version.strip()
-    if v.startswith(("v", "V")):
-        v = v[1:]
-
-    if "+" in v:
-        v = v.split("+", 1)[0]
-
-    core_part, pre_part = (v.split("-", 1) + [""])[:2] if "-" in v else (v, "")
-
-    def parse_core_number(part: str) -> int:
-        num = ""
-        for ch in part:
-            if ch.isdigit():
-                num += ch
-            else:
-                break
-        return int(num) if num else 0
-
-    core_numbers = [parse_core_number(p) for p in core_part.split(".") if p != ""]
-    prerelease = [p for p in pre_part.split(".") if p != ""] if pre_part else []
-    return core_numbers, prerelease
-
-
-def compare_semver(a: str | None, b: str | None) -> int:
-    if not a and not b:
-        return 0
-    if a and not b:
-        return 1
-    if b and not a:
-        return -1
-
-    left_core, left_pre = parse_semver(a or "")
-    right_core, right_pre = parse_semver(b or "")
-
-    max_len = max(len(left_core), len(right_core))
-    left_core += [0] * (max_len - len(left_core))
-    right_core += [0] * (max_len - len(right_core))
-    for l, r in zip(left_core, right_core):
-        if l > r:
-            return 1
-        if l < r:
-            return -1
-
-    if not left_pre and not right_pre:
-        return 0
-    if not left_pre and right_pre:
-        return 1
-    if left_pre and not right_pre:
-        return -1
-
-    def is_numeric_identifier(s: str) -> bool:
-        return s.isdigit()
-
-    for l, r in zip(left_pre, right_pre):
-        l_num = is_numeric_identifier(l)
-        r_num = is_numeric_identifier(r)
-
-        if l_num and r_num:
-            li, ri = int(l), int(r)
-            if li > ri:
-                return 1
-            if li < ri:
-                return -1
-            continue
-
-        if l_num and not r_num:
-            return -1
-        if not l_num and r_num:
-            return 1
-
-        if l > r:
-            return 1
-        if l < r:
-            return -1
-
-    if len(left_pre) > len(right_pre):
-        return 1
-    if len(left_pre) < len(right_pre):
-        return -1
-    return 0
-
-
-def ensure_cache_dir() -> Path:
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    return CACHE_DIR
-
-
-def cleanup_cache_file(path: Path) -> None:
-    try:
-        if path.exists():
-            path.unlink()
-            print(Console.ok(t("inf_cache_cleaned", path=path)))
-        meta = Path(str(path) + ".url")
-        if meta.exists():
-            meta.unlink()
-    except OSError as e:
-        print(Console.warn(t("wrn_cache_clean_failed", path=path, error=e)))
-
-
 def clean_cache() -> None:
     if not CACHE_DIR.exists():
         print(Console.info(t("inf_cache_empty")))
@@ -313,161 +160,13 @@ def clean_cache() -> None:
         print(Console.warn(t("wrn_cache_clean_failed", path=CACHE_DIR, error=e)))
 
 
-def download_file(url: str, dest_path: Path, resume: bool = False) -> bool:
-    def to_percentage(current: float, total: float) -> str:
-        return f"{(current / total) * 100:.1f}%" if total > 0 else ""
-
-    def to_file_size(size: int | None) -> str:
-        if size is None or size < 0:
-            return "--"
-        s = float(size)
-        for unit in ["B", "KB", "MB", "GB", "TB"]:
-            if s < 1024.0 or unit == "TB":
-                return f"{s:.1f} {unit}"
-            s /= 1024.0
-        return "--"
-
-    def to_speed(bps: float) -> str:
-        if bps is None or bps <= 0:
-            return "--/s"
-        s = float(bps)
-        for unit in ["B/s", "KB/s", "MB/s", "GB/s"]:
-            if s < 1024.0 or unit == "GB/s":
-                return f"{s:.1f} {unit}"
-            s /= 1024.0
-        return "--/s"
-
-    def seconds_to_hms(sec: float | None) -> str:
-        if sec is None or sec < 0:
-            return "--:--:--"
-        sec = int(sec)
-        h = sec // 3600
-        m = (sec % 3600) // 60
-        s = sec % 60
-        return f"{h:02d}:{m:02d}:{s:02d}"
-
-    _retried_416 = False
-
-    try:
-        print(Console.info(t("inf_start_download", url=url)))
-
-        url_meta = Path(str(dest_path) + ".url")
-
-        if resume and dest_path.exists() and dest_path.stat().st_size > 0:
-            if url_meta.exists():
-                try:
-                    cached_url = url_meta.read_text(encoding="utf-8").strip()
-                except OSError:
-                    cached_url = ""
-                if cached_url and cached_url != url:
-                    print(Console.warn(t("wrn_cache_url_mismatch")))
-                    cleanup_cache_file(dest_path)
-                    if dest_path.exists():
-                        resume = False
-
-        while True:
-            existing_size = 0
-            if resume and not _retried_416 and dest_path.exists():
-                existing_size = dest_path.stat().st_size
-                if existing_size > 0:
-                    print(Console.info(t("inf_resume_detected", size=to_file_size(existing_size))))
-
-            req = urllib.request.Request(url)
-            req.add_header("User-Agent", "MDA-setup")
-            if existing_size > 0:
-                req.add_header("Range", f"bytes={existing_size}-")
-
-            print(Console.info(t("inf_connecting")), end="", flush=True)
-            try:
-                res = urllib.request.urlopen(req, timeout=TIMEOUT)
-            except urllib.error.HTTPError as he:
-                if he.code == 416 and existing_size > 0 and not _retried_416:
-                    print()
-                    _retried_416 = True
-                    cleanup_cache_file(dest_path)
-                    continue
-                raise
-
-            break
-
-        with res:
-            status_code = res.getcode()
-            if status_code == 206:
-                content_range = res.headers.get("Content-Range", "")
-                size_total = 0
-                if "/" in content_range:
-                    total_str = content_range.rsplit("/", 1)[-1].strip()
-                    if total_str != "*":
-                        try:
-                            size_total = int(total_str)
-                        except (ValueError, TypeError):
-                            size_total = 0
-                file_mode = "ab"
-                size_received = existing_size
-                print(Console.info(
-                    t("inf_resuming_download",
-                      downloaded=to_file_size(existing_size),
-                      total=to_file_size(size_total))
-                ))
-            else:
-                size_total = int(res.headers.get("Content-Length", 0) or 0)
-                file_mode = "wb"
-                size_received = 0
-                if existing_size > 0:
-                    print(Console.warn(t("wrn_resume_not_supported")))
-
-            session_received = 0
-            cached_progress_str = ""
-            start_ts = time.time()
-
-            with open(dest_path, file_mode) as out_file:
-                while True:
-                    chunk = res.read(8192)
-                    if not chunk:
-                        break
-                    out_file.write(chunk)
-                    size_received += len(chunk)
-                    session_received += len(chunk)
-
-                    elapsed = max(1e-6, time.time() - start_ts)
-                    speed = session_received / elapsed
-                    eta = None
-                    if size_total > 0 and speed > 0:
-                        eta = (size_total - size_received) / speed
-
-                    progress_str = (
-                        f"{to_file_size(size_received)}/{to_file_size(size_total)} "
-                        f"({to_percentage(size_received, size_total)}) | "
-                        f"{to_speed(speed)} | ETA {seconds_to_hms(eta)}"
-                    )
-
-                    if progress_str != cached_progress_str:
-                        print(
-                            f"\r{Console.info(t('inf_downloading', progress=progress_str))}",
-                            end="",
-                            flush=True,
-                        )
-                        cached_progress_str = progress_str
-        print()
-        print(Console.ok(t("inf_download_complete", path=dest_path)))
-        try:
-            url_meta.write_text(url, encoding="utf-8")
-        except OSError:
-            pass
-        return True
-    except urllib.error.URLError as e:
-        print(Console.err(t("err_network_error", reason=e.reason)))
-    except Exception as e:
-        print(Console.err(t("err_download_failed", error_type=type(e).__name__, error=e)))
-    return False
-
-
 def install_maafw(
     install_root: Path,
     skip_if_exist: bool = True,
     update_mode: bool = False,
     local_version: str | None = None,
 ) -> tuple[bool, str | None, bool]:
+    _ = skip_if_exist, update_mode
     real_install_root = install_root.resolve()
     maafw_dest = real_install_root / "maafw"
     maafw_deps = PROJECT_BASE / "deps"
@@ -484,97 +183,6 @@ def install_maafw(
     print(Console.err("[ERR] Auto update disabled: MaaFramework local dependency not found."))
     return False, local_version, False
 
-    if skip_if_exist and maafw_installed:
-        print(Console.ok(t("inf_maafw_installed_skip")))
-        return True, local_version, False
-
-    url, filename, remote_version = get_latest_release_url(
-        MFW_REPO, ["maa", OS_KEYWORD, ARCH_KEYWORD]
-    )
-    if not url or not filename:
-        print(Console.err(t("err_maafw_url_not_found")))
-        return False, local_version, False
-
-    if (
-        update_mode
-        and maafw_installed
-        and local_version
-        and remote_version
-        and compare_semver(local_version, remote_version) >= 0
-    ):
-        print(Console.ok(t("inf_maafw_latest_version", version=local_version)))
-        return True, local_version, False
-
-    cache_dir = ensure_cache_dir()
-    download_path = cache_dir / filename
-    if not download_file(url, download_path, resume=True):
-        return False, local_version, False
-
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        tmp_path = Path(tmp_dir)
-
-        maafw_dest_is_link = maafw_dest.is_symlink()
-        if hasattr(maafw_dest, 'is_junction'):
-            maafw_dest_is_link = maafw_dest_is_link or maafw_dest.is_junction()
-
-        if maafw_dest_is_link:
-            print(Console.ok(t("inf_link_already_exists", path=maafw_dest)))
-        elif maafw_dest.exists():
-            if maafw_dest.is_dir():
-                while True:
-                    try:
-                        print(Console.info(t("inf_delete_old_dir", path=maafw_dest)))
-                        shutil.rmtree(maafw_dest)
-                        break
-                    except PermissionError as e:
-                        print(Console.err(t("err_permission_denied", error=e)))
-                        print(Console.err(t("err_cannot_delete_maafw", path=maafw_dest)))
-                        cmd = input(t("prompt_retry_or_quit")).strip().lower()
-                        if cmd == "q":
-                            return False, local_version, False
-                    except Exception as e:
-                        print(Console.err(t("err_unknown_error_delete", error=e)))
-                        return False, local_version, False
-            else:
-                maafw_dest.unlink(missing_ok=True)
-
-        print(Console.info(t("inf_extract_maafw")))
-        try:
-            extract_root = tmp_path / "extracted"
-            extract_root.mkdir(parents=True, exist_ok=True)
-
-            shutil.unpack_archive(str(download_path), extract_root)
-
-            sdk_root = None
-            for root, dirs, _ in os.walk(extract_root):
-                if "bin" in dirs:
-                    sdk_root = Path(root)
-                    break
-
-            if not sdk_root:
-                print(Console.err(t("err_bin_not_found")))
-                return False, local_version, False
-
-            print(Console.info(t("inf_copying_sdk", dest=maafw_deps)))
-            if maafw_deps.exists():
-                shutil.rmtree(maafw_deps)
-            shutil.copytree(sdk_root, maafw_deps)
-            print(Console.ok(t("inf_sdk_copied", dest=maafw_deps)))
-
-            if not maafw_dest_is_link:
-                bin_path = maafw_deps / "bin"
-                print(Console.info(t("inf_creating_link", link=maafw_dest, target=bin_path)))
-                if not create_directory_link(bin_path, maafw_dest):
-                    print(Console.err(t("err_create_link_failed")))
-                    return False, local_version, False
-
-            print(Console.ok(t("inf_maafw_install_complete")))
-            cleanup_cache_file(download_path)
-            return True, remote_version or local_version, True
-        except Exception as e:
-            print(Console.err(t("err_maafw_install_failed", error=e)))
-            return False, local_version, False
-
 
 def install_mxu(
     install_root: Path,
@@ -582,6 +190,7 @@ def install_mxu(
     update_mode: bool = False,
     local_version: str | None = None,
 ) -> tuple[bool, str | None, bool]:
+    _ = skip_if_exist, update_mode
     real_install_root = install_root.resolve()
     mxu_path = real_install_root / MXU_DIST_NAME
     launcher_path = real_install_root / MXU_LAUNCHER_NAME
@@ -598,97 +207,9 @@ def install_mxu(
     print(Console.err("[ERR] Auto update disabled: MXU local executable not found."))
     return False, local_version, False
 
-    if skip_if_exist and launcher_installed:
-        print(Console.ok(t("inf_mxu_installed_skip")))
-        return True, local_version, False
-
-    url, filename, remote_version = get_latest_release_url(
-        MXU_REPO, ["mxu", OS_KEYWORD, ARCH_KEYWORD]
-    )
-    if not url or not filename:
-        print(Console.err(t("err_mxu_url_not_found")))
-        return False, local_version, False
-
-    if (
-        update_mode
-        and launcher_installed
-        and local_version
-        and remote_version
-        and compare_semver(local_version, remote_version) >= 0
-    ):
-        print(Console.ok(t("inf_mxu_latest_version", version=local_version)))
-        return True, local_version, False
-
-    cache_dir = ensure_cache_dir()
-    download_path = cache_dir / filename
-    if not download_file(url, download_path, resume=True):
-        return False, local_version, False
-
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        tmp_path = Path(tmp_dir)
-
-        for stale_path in (mxu_path, launcher_path):
-            if not stale_path.exists():
-                continue
-            while True:
-                try:
-                    print(Console.info(t("inf_delete_old_file", path=stale_path)))
-                    stale_path.unlink()
-                    break
-                except PermissionError as e:
-                    print(Console.err(t("err_permission_denied", error=e)))
-                    print(Console.err(t("err_cannot_delete_mxu", name=stale_path.name)))
-                    cmd = input(t("prompt_retry_or_quit")).strip().lower()
-                    if cmd == "q":
-                        return False, local_version, False
-                except Exception as e:
-                    print(Console.err(t("err_unknown_error_delete_file", error=e)))
-                    return False, local_version, False
-
-        print(Console.info(t("inf_extract_install_mxu")))
-        try:
-            extract_root = tmp_path / "extracted"
-            extract_root.mkdir(parents=True, exist_ok=True)
-
-            shutil.unpack_archive(str(download_path), extract_root)
-
-            integrated_paths = integrate_mxu_bundle(
-                extract_root,
-                real_install_root,
-                target_name=MXU_LAUNCHER_NAME,
-            )
-            for key in ("original_executable", "renamed_executable"):
-                integrated_path = integrated_paths.get(key)
-                if integrated_path is not None:
-                    print(Console.ok(t("inf_updated_file", name=integrated_path.name)))
-            print(Console.ok(t("inf_mxu_install_complete")))
-            cleanup_cache_file(download_path)
-            return True, remote_version or local_version, True
-        except FileNotFoundError:
-            print(Console.err(t("err_mxu_not_found", name=MXU_DIST_NAME)))
-            return False, local_version, False
-        except Exception as e:
-            print(Console.err(t("err_mxu_install_failed", error=e)))
-            return False, local_version, False
-
-
-def _is_cn_locale() -> bool:
-    import locale as _locale
-    loc = _locale.getlocale()
-    lang = (loc[0] or "").lower()
-    return lang in ("zh_cn", "chinese (simplified)_china")
-
 
 def main() -> None:
     init_local()
-
-    if _is_cn_locale():
-        print(
-            Console.warn(
-                "[提示] 本脚本需要访问 GitHub，若出现下载超时或连接失败，可尝试配置系统代理"
-            )
-        )
-        print("-" * 60)
 
     parser = argparse.ArgumentParser(description=t("description"))
     parser.add_argument("--update", action="store_true", help=t("arg_update"))
@@ -701,11 +222,8 @@ def main() -> None:
         return
 
     install_dir = PROJECT_BASE / "install"
-    version_file = install_dir / VERSION_FILE_NAME
-    local_versions = read_versions_file(version_file)
 
     print(Console.hdr(t("header_workspace_init")))
-    configure_token()
 
     # 1. Update submodules
     if not update_submodules(skip_if_exist=not args.update):
@@ -720,37 +238,25 @@ def main() -> None:
 
     # 3. Download MaaFramework & MXU
     print(Console.hdr(t("header_download_deps")))
-    versions: dict[str, str] = dict(local_versions)
-    any_downloaded = False
-
-    maafw_ok, maafw_version, maafw_downloaded = install_maafw(
+    maafw_ok, _, _ = install_maafw(
         install_dir,
         skip_if_exist=not args.update,
         update_mode=args.update,
-        local_version=local_versions.get("maafw"),
+        local_version=None,
     )
     if not maafw_ok:
         print(Console.err(t("fatal_maafw_failed")))
         sys.exit(1)
-    if maafw_version:
-        versions["maafw"] = maafw_version
-    any_downloaded = any_downloaded or maafw_downloaded
 
-    mxu_ok, mxu_version, mxu_downloaded = install_mxu(
+    mxu_ok, _, _ = install_mxu(
         install_dir,
         skip_if_exist=not args.update,
         update_mode=args.update,
-        local_version=local_versions.get("mxu"),
+        local_version=None,
     )
     if not mxu_ok:
         print(Console.err(t("fatal_mxu_failed")))
         sys.exit(1)
-    if mxu_version:
-        versions["mxu"] = mxu_version
-    any_downloaded = any_downloaded or mxu_downloaded
-
-    if not args.ci and any_downloaded:
-        write_versions_file(version_file, versions)
 
     print(Console.ok(t("header_setup_complete")))
     print(Console.info(t("inf_workspace_ready", mxu_path=install_dir / MXU_LAUNCHER_NAME)))

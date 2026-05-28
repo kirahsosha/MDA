@@ -1,4 +1,1 @@
-- 用户群: [584275905](https://qm.qq.com/q/JpBdw9s4Ei)
-- Discord: [MDA Discord](https://discord.com/invite/f4rAWJVNJj)
-- 开源代码: [GitHub](https://github.com/1204244136/MDA)
-- 问题反馈: [GitHub Issue](https://github.com/1204244136/MDA/issues)
+联系入口已从当前发行内容中移除。

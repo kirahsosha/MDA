@@ -2,7 +2,7 @@ import type {FullConfig} from "@nekosu/maa-tools";
 
 const config: FullConfig = {
     cwd: import.meta.dirname,
-    maaVersion: "latest",
+    maaVersion: "v4.0.0-beta.14",
     interfacePath: "assets/interface.json",
     check: {},
     vscode: {

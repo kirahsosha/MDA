@@ -422,7 +422,7 @@ def main() -> None:
     elif maafw_dir.exists() and deps_bin.exists():
         # Old copy-based install — replace with junction
         print(Console.info(t("inf_delete_old_dir", path=maafw_dir)))
-        shutil.rmtree(maafw_dir)
+        remove_path(maafw_dir)
         if use_copy:
             copy_directory(deps_bin, maafw_dir)
         else:
@@ -456,7 +456,6 @@ def main() -> None:
             print()
             print(Console.warn(t("maafw_download_hint")))
             print(f"  {t('maafw_download_step')}")
-            print(f"  {t('maafw_download_url')}")
         if (
             not (install_dir / "mxu").exists()
             and not (install_dir / "mxu.exe").exists()
@@ -464,7 +463,6 @@ def main() -> None:
             print()
             print(Console.warn(t("mxu_download_hint")))
             print(f"  {t('mxu_download_step')}")
-            print(f"  {t('mxu_download_url')}")
 
     print()
 

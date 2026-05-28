@@ -1,8 +1,3 @@
-<!-- markdownlint-disable MD033 MD041 -->
-<p align="center">
-  <img alt="LOGO" src="https://s1.imagehub.cc/images/2026/05/12/d1d0730a19f251d8ea800897754f0ab2.png" width="256" height="256" />
-</p>
-
 <div align="center">
 
 # MDA
@@ -13,20 +8,7 @@ Maa Doro Assistant
 
 </div>
 
-MDA 是一款基于 [MaaFramework](https://github.com/MaaXYZ/MaaFramework) 开发的游戏自动化辅助工具，由 [DoroHelper](https://github.com/1204244136/DoroHelper) 重写而来。
-
----
-
-## 会员功能
-
-为了给大家提供更稳定、更高效的自动化体验，本项目目前由我**全职进行维护与更新**。由于持续开发、适配游戏更新以及维护项目需要投入大量的时间与精力，MDA 采取了**部分功能赞助可用**的模式，以保障项目的长期健康发展。
-
-具体说明如下：
-
-- **会员任务标识**：在任务列表中，前缀带有橘子 **🍊** 标记的任务为会员专属任务。
-- **赞助方式**：当您尝试运行任何带有 🍊 标记的会员任务时，**赞助链接会自动显示在运行日志中**，届时可通过链接对本项目进行赞助支持。
-
-感谢所有开发者的贡献，以及每一位用户的理解与支持！您的赞助是我持续优化 MDA 的最大动力。
+MDA 是一款游戏自动化辅助工具。
 
 ---
 

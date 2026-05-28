@@ -1,8 +1,3 @@
-<!-- markdownlint-disable MD033 MD041 -->
-<p align="center">
-  <img alt="LOGO" src="https://s1.imagehub.cc/images/2026/05/12/d1d0730a19f251d8ea800897754f0ab2.png" width="256" height="256" />
-</p>
-
 <div align="center">
 
 # MDA
@@ -13,20 +8,7 @@ Maa Doro Assistant
 
 </div>
 
-MDA is a game automation assistant built on [MaaFramework](https://github.com/MaaXYZ/MaaFramework), rewritten from [DoroHelper](https://github.com/1204244136/DoroHelper).
-
----
-
-## Member Features
-
-To provide a more stable and efficient automation experience, this project is currently **maintained and updated full-time**. Due to the significant time and effort required for ongoing development, adapting to game updates, and maintaining the project, MDA adopts a **partial features available via sponsorship** model to ensure the long-term healthy development of the project.
-
-Details are as follows:
-
-- **Member Task标识**: In the task list, tasks prefixed with the orange **🍊** marker are exclusive to members.
-- **Sponsorship Method**: When you attempt to run any member task marked with 🍊, **a sponsorship link will be automatically displayed in the run log**. You can then sponsor the project through the link.
-
-Thank you to all contributors for their efforts, and to every user for their understanding and support! Your sponsorship is the biggest motivation for me to continuously optimize MDA.
+MDA is a game automation assistant.
 
 ---
 
