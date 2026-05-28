@@ -2,28 +2,43 @@
     "BriefEncounter": {
         "desc": "突发活动",
         "max_hit": 1,
-        "next": ["OutpostEnterBriefEncounter", "CommonEndTask"]
+        "next": [
+            "OutpostEnterBriefEncounter",
+            "CommonEndTask"
+        ]
     },
     "OutpostEnterBriefEncounter": {
         "desc": "进入突发活动",
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": ["OutpostDailyLivesAvailable", "OutpostStaminaAvailable"]
+                "all_of": [
+                    "OutpostDailyLivesAvailable",
+                    "OutpostStaminaAvailable"
+                ]
             }
         },
         "action": {
             "type": "Click"
         },
         "post_wait_freezes": 500,
-        "next": ["OutpostDailyLives", "OutpostEnterBriefEncounter", "CommonEndTask"]
+        "next": [
+            "OutpostDailyLives",
+            "OutpostEnterBriefEncounter",
+            "CommonEndTask"
+        ]
     },
     "OutpostDailyLivesAvailable": {
         "desc": "日常状态次数足够",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [62, 57, 40, 24],
+                "roi": [
+                    62,
+                    57,
+                    40,
+                    24
+                ],
                 "expected": ["^[1-9]\\d*$"]
             }
         }
@@ -33,7 +48,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [128, 62, 21, 14],
+                "roi": [
+                    128,
+                    62,
+                    21,
+                    14
+                ],
                 "expected": ["^[1-9]\\d*$"]
             }
         }
@@ -43,7 +63,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [3, 86, 183, 52],
+                "roi": [
+                    3,
+                    86,
+                    183,
+                    52
+                ],
                 "template": ["Outpost/DailyLives.png"]
             }
         },
@@ -58,7 +83,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [756, 566, 41, 38],
+                "roi": [
+                    756,
+                    566,
+                    41,
+                    38
+                ],
                 "template": ["Outpost/Event.png"]
             }
         },
@@ -80,7 +110,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [631, 667, 60, 32],
+                "roi": [
+                    631,
+                    667,
+                    60,
+                    32
+                ],
                 "expected": ["关闭"]
             }
         },
@@ -96,6 +131,9 @@
                 "all_of": ["OutpostMainPageEntered"]
             }
         },
-        "next": ["OutpostEnterBriefEncounter", "CommonEndTask"]
+        "next": [
+            "OutpostEnterBriefEncounter",
+            "CommonEndTask"
+        ]
     }
 }

@@ -6,14 +6,24 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [314, 413, 661, 294],
+                "roi": [
+                    314,
+                    413,
+                    661,
+                    294
+                ],
                 "expected": [".*加成.*"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [0, -50, 0, 0]
+                "target_offset": [
+                    0,
+                    -50,
+                    0,
+                    0
+                ]
             }
         },
         "post_wait_freezes": 500,
@@ -25,7 +35,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [5, 18, 50, 16],
+                "roi": [
+                    5,
+                    18,
+                    50,
+                    16
+                ],
                 "expected": [".*活动关.*"]
             }
         }
@@ -41,7 +56,12 @@
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [494, 505, 294, 131]
+            "target": [
+                494,
+                505,
+                294,
+                131
+            ]
         },
         "next": ["SmallEventEventStageBattleFlow"]
     },
@@ -83,7 +103,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [5, 18, 50, 16],
+                "roi": [
+                    5,
+                    18,
+                    50,
+                    16
+                ],
                 "expected": ["剧情活动"]
             }
         }
@@ -94,7 +119,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [314, 103, 661, 604],
+                "roi": [
+                    314,
+                    103,
+                    661,
+                    604
+                ],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -113,7 +143,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [314, 103, 661, 604],
+                "roi": [
+                    314,
+                    103,
+                    661,
+                    604
+                ],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -131,7 +166,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [314, 103, 661, 604],
+                "roi": [
+                    314,
+                    103,
+                    661,
+                    604
+                ],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],
@@ -149,7 +189,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [314, 103, 661, 604],
+                "roi": [
+                    314,
+                    103,
+                    661,
+                    604
+                ],
                 "template": [
                     "Common/RedDot.png" //占位，应该去task页面修改
                 ],

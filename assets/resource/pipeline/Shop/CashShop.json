@@ -6,28 +6,44 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": ["HallEnterCashShop", "[JumpBack]NavigationEnterHall"]
+        "next": [
+            "HallEnterCashShop",
+            "[JumpBack]NavigationEnterHall"
+        ]
     },
     "HallEnterCashShop": {
         "desc": "进入付费商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [358, 441, 59, 21],
+                "roi": [
+                    358,
+                    441,
+                    59,
+                    21
+                ],
                 "expected": ["付费商店"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": ["CashShopCornerFlow", "HallEnterCashShop"]
+        "next": [
+            "CashShopCornerFlow",
+            "HallEnterCashShop"
+        ]
     },
     "CashShopMainPageEntered": {
         "desc": "处于付费商店",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [0, 15, 70, 25],
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
                 "expected": ["付费商店"]
             }
         }
@@ -40,7 +56,10 @@
                 "all_of": ["CashShopMainPageEntered"]
             }
         },
-        "next": ["[JumpBack]ShopStepUpPackagePurchase", "ShopChooseOrdinaryPackage"]
+        "next": [
+            "[JumpBack]ShopStepUpPackagePurchase",
+            "ShopChooseOrdinaryPackage"
+        ]
     },
     "ShopStepUpPackagePurchase": {
         "desc": "购买StepUp礼包",
@@ -48,7 +67,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [783, 389, 49, 28],
+                "roi": [
+                    783,
+                    389,
+                    49,
+                    28
+                ],
                 "expected": ["免费"]
             }
         },
@@ -62,7 +86,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [1, 138, 543, 44],
+                "roi": [
+                    1,
+                    138,
+                    543,
+                    44
+                ],
                 "template": ["CashShop/OrdinaryPackage.png"],
                 "threshold": [0.9]
             }
@@ -71,14 +100,23 @@
         "action": {
             "type": "Click"
         },
-        "next": ["[JumpBack]CashShopClickRedDot", "[JumpBack]CommonConfirmReward", "CommonEndTask"]
+        "next": [
+            "[JumpBack]CashShopClickRedDot",
+            "[JumpBack]CommonConfirmReward",
+            "CommonEndTask"
+        ]
     },
     "CashShopClickRedDot": {
         "desc": "点击付费商店红点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [9, 187, 509, 91],
+                "roi": [
+                    9,
+                    187,
+                    509,
+                    91
+                ],
                 "template": ["Common/RedDot.png"],
                 "order_by": "Vertical",
                 "index": -1

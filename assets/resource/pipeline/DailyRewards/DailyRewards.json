@@ -7,7 +7,10 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": ["DailyRewardsStart", "[JumpBack]NavigationEnterHall"]
+        "next": [
+            "DailyRewardsStart",
+            "[JumpBack]NavigationEnterHall"
+        ]
     },
     "DailyRewardsStart": {
         "desc": "每日奖励",

@@ -5,7 +5,10 @@
             "label": "$task.RedDotClear.label",
             "entry": "RedDotClearMain",
             "description": "$task.RedDotClear.description",
-            "option": ["RedDotClearCashShop", "RedDotClearNotice"],
+            "option": [
+                "RedDotClearCashShop",
+                "RedDotClearNotice"
+            ],
             "group": ["utility"]
         }
     ],

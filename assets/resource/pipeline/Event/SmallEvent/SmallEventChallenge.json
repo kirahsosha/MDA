@@ -6,9 +6,17 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [485, 536, 308, 79],
+                "roi": [
+                    485,
+                    536,
+                    308,
+                    79
+                ],
                 "expected": [".*挑战.*"],
-                "replace": [["排", "挑"]]
+                "replace": [[
+                        "排",
+                        "挑"
+                    ]]
             }
         },
         "action": {
@@ -16,7 +24,10 @@
         },
         "post_wait_freezes": 500,
         "timeout": 60000,
-        "next": ["[JumpBack]SmallEventChallengeStart", "SmallEventGoBack"]
+        "next": [
+            "[JumpBack]SmallEventChallengeStart",
+            "SmallEventGoBack"
+        ]
     },
     "SmallEventChallengeStart": {
         "max_hit": 1,

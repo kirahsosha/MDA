@@ -5,14 +5,24 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [418, 423, 22, 20],
+                "roi": [
+                    418,
+                    423,
+                    22,
+                    20
+                ],
                 "template": ["Common/New.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-20, 20, 0, 0]
+                "target_offset": [
+                    -20,
+                    20,
+                    0,
+                    0
+                ]
             }
         },
         "next": ["RedDotClearCashShopFlow"]
@@ -32,7 +42,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [3, 140, 883, 89],
+                "roi": [
+                    3,
+                    140,
+                    883,
+                    89
+                ],
                 "template": ["Common/New.png"],
                 "order_by": "Vertical",
                 "index": -1
@@ -41,9 +56,17 @@
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-20, 20, 0, 0]
+                "target_offset": [
+                    -20,
+                    20,
+                    0,
+                    0
+                ]
             }
         },
-        "next": ["RedDotClearCashShopNewClick", "CommonEndTask"]
+        "next": [
+            "RedDotClearCashShopNewClick",
+            "CommonEndTask"
+        ]
     }
 }

@@ -8,7 +8,10 @@
                 "custom_action": "RuntimeQuotaCheck"
             }
         },
-        "next": ["AdviseStart", "[JumpBack]NavigationEnterHall"]
+        "next": [
+            "AdviseStart",
+            "[JumpBack]NavigationEnterHall"
+        ]
     },
     "AdviseStart": {
         "desc": "开始咨询总流程",
@@ -18,32 +21,57 @@
                 "all_of": ["NavigationArkVisible"]
             }
         },
-        "next": ["AdviseEnterNikkePage", "CommonEndTask"]
+        "next": [
+            "AdviseEnterNikkePage",
+            "CommonEndTask"
+        ]
     },
     "AdviseEnterNikkePage": {
         "desc": "进入妮姬界面",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [501, 632, 28, 23],
-                "template": ["Common/RedDot.png", "Common/New.png"]
+                "roi": [
+                    501,
+                    632,
+                    28,
+                    23
+                ],
+                "template": [
+                    "Common/RedDot.png",
+                    "Common/New.png"
+                ]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-30, 30, 0, 0]
+                "target_offset": [
+                    -30,
+                    30,
+                    0,
+                    0
+                ]
             }
         },
         "post_wait_freezes": 1000,
-        "next": ["AdviseEnterAdvisePage", "[JumpBack]AdviseNikkeMainPageEntered", "AdviseEnterNikkePage"]
+        "next": [
+            "AdviseEnterAdvisePage",
+            "[JumpBack]AdviseNikkeMainPageEntered",
+            "AdviseEnterNikkePage"
+        ]
     },
     "AdviseEnterAdvisePage": {
         "desc": "进入咨询界面",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [1082, 74, 58, 24],
+                "roi": [
+                    1082,
+                    74,
+                    58,
+                    24
+                ],
                 "expected": ["咨询"]
             }
         },
@@ -63,21 +91,34 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [152, 238, 56, 24],
+                "roi": [
+                    152,
+                    238,
+                    56,
+                    24
+                ],
                 "expected": ["RANK"]
             }
         },
         "action": {
             "type": "Click"
         },
-        "next": ["AdviseChooseNikke", "AdviseFlow"]
+        "next": [
+            "AdviseChooseNikke",
+            "AdviseFlow"
+        ]
     },
     "AdviseMainPageEntered": {
         "desc": "处于咨询界面",
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [0, 15, 70, 25],
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
                 "expected": ["咨询"]
             }
         }
@@ -87,7 +128,12 @@
         "recognition": {
             "type": "OCR",
             "param": {
-                "roi": [0, 15, 70, 25],
+                "roi": [
+                    0,
+                    15,
+                    70,
+                    25
+                ],
                 "expected": ["妮姬"]
             }
         }

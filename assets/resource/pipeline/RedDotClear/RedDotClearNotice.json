@@ -5,14 +5,24 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [1191, 10, 16, 16],
+                "roi": [
+                    1191,
+                    10,
+                    16,
+                    16
+                ],
                 "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-10, 10, 0, 0]
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
             }
         },
         "next": ["RedDotClearNoticeFlow"]
@@ -36,7 +46,12 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [775, 133, 46, 507],
+                "roi": [
+                    775,
+                    133,
+                    46,
+                    507
+                ],
                 "template": ["Common/RedDot.png"],
                 "threshold": 0.8
             }
@@ -44,12 +59,22 @@
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-10, 10, 0, 0]
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [464, 34, 353, 625]
+            "target": [
+                464,
+                34,
+                353,
+                625
+            ]
         },
         "next": ["RedDotClearNoticenClickBlank"]
     },
@@ -58,14 +83,24 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [460, 84, 362, 50],
+                "roi": [
+                    460,
+                    84,
+                    362,
+                    50
+                ],
                 "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Click",
             "param": {
-                "target_offset": [-10, 10, 0, 0]
+                "target_offset": [
+                    -10,
+                    10,
+                    0,
+                    0
+                ]
             }
         },
         "next": ["RedDotClearScrollUp"]
@@ -75,12 +110,20 @@
         "action": {
             "type": "Click",
             "param": {
-                "target": [150, 650]
+                "target": [
+                    150,
+                    650
+                ]
             }
         },
         "post_wait_freezes": {
             "time": 500,
-            "target": [464, 134, 353, 464]
+            "target": [
+                464,
+                134,
+                353,
+                464
+            ]
         }
     },
     "RedDotClearScrollUp": {
@@ -88,15 +131,26 @@
         "recognition": {
             "type": "TemplateMatch",
             "param": {
-                "roi": [460, 84, 362, 50],
+                "roi": [
+                    460,
+                    84,
+                    362,
+                    50
+                ],
                 "template": ["Common/RedDot.png"]
             }
         },
         "action": {
             "type": "Swipe",
             "param": {
-                "begin": [627, 528],
-                "end": [627, 238],
+                "begin": [
+                    627,
+                    528
+                ],
+                "end": [
+                    627,
+                    238
+                ],
                 "end_hold": 300
             }
         },
