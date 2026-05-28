@@ -9,7 +9,9 @@
                 "RedDotClearCashShop",
                 "RedDotClearNotice"
             ],
-            "group": ["utility"]
+            "group": [
+                "utility"
+            ]
         }
     ],
     "option": {

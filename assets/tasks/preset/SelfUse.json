@@ -17,8 +17,12 @@
                     "option": {
                         "CommonShopFreeGoods": "Yes",
                         "CommonShopCoreDustCase": "No",
-                        "ArenaShopItemList": ["ArenaShopElectricCodeManual"],
-                        "RecyclingShopList": ["Gem"]
+                        "ArenaShopItemList": [
+                            "ArenaShopElectricCodeManual"
+                        ],
+                        "RecyclingShopList": [
+                            "Gem"
+                        ]
                     }
                 },
                 {

@@ -2,7 +2,7 @@
     "scripts": {
         "utf8-cmd": "scripts\\utf8-cmd.cmd",
         "format": "prettier --write \"**/*.{json,yml,yaml,md}\"",
-        "format:aggressive": "prettier --print-width 20 --write \"assets/resource/pipeline/**/*.json\" && prettier --write \"assets/resource/pipeline/**/*.json\"",
+        "format:aggressive": "prettier --print-width 20 --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\" && prettier --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\"",
         "format:check": "prettier --check \"**/*.{json,yml,yaml,md}\""
     },
     "devDependencies": {
