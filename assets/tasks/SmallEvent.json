@@ -24,7 +24,7 @@
                     "name": "BSideIdol",
                     "label": "$option.SmallEventTheme.BSideIdol",
                     "pipeline_override": {
-                        "SmallEventEntry": {
+                        "SmallEventEnterMainPage": {
                             "recognition": {
                                 "param": {
                                     "template": [

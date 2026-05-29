@@ -1,9 +1,8 @@
 {
     "LargeEventLoginStamp": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "大活动签到",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -21,6 +20,7 @@
         "action": {
             "type": "Click"
         },
+        "timeout": 60000,
         "next": [
             "LargeEventLoginStampClaim"
         ]

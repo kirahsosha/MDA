@@ -3,13 +3,13 @@
         "action": {
             "type": "Custom",
             "param": {
-                "custom_action": "MembershipCheck"
+                "custom_action": "RuntimeQuotaCheck"
             }
         },
         "next": [
             "[JumpBack]ArenaSpecialRewardClaim",
             "ArkEnterArena",
-            "[JumpBack]HallEnterArk"
+            "[JumpBack]NavigationEnterArkFlow"
         ]
     },
     "ArenaSpecialRewardClaim": {
@@ -68,16 +68,12 @@
     "ArenaMainPageEntered": {
         "desc": "处于竞技场",
         "recognition": {
-            "type": "OCR",
+            "type": "Or",
             "param": {
-                "roi": [
-                    0,
-                    15,
-                    70,
-                    25
-                ],
-                "expected": [
-                    "^竞技场$"
+                "any_of": [
+                    "RookieArenaVisible",
+                    "SpecialArenaVisible",
+                    "ChampionArenaVisible"
                 ]
             }
         }
@@ -153,7 +149,7 @@
         },
         "next": [
             "[JumpBack]RookieArenaClickQuickBattleToggle",
-            "BattleStart"
+            "BattleEntryFlow"
         ]
     }
 }

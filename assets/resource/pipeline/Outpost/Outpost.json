@@ -1,8 +1,14 @@
 {
     "OutpostMain": {
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
             "HallEnterOutpost",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "HallEnterOutpost": {
@@ -25,11 +31,11 @@
             "type": "Click"
         },
         "next": [
-            "OutpostTask",
+            "OutpostTaskFlow",
             "HallEnterOutpost"
         ]
     },
-    "OutpostTask": {
+    "OutpostTaskFlow": {
         "desc": "前哨基地任务枢纽",
         "recognition": {
             "type": "And",

@@ -129,5 +129,7 @@
     "preset.DailyFull.description": "执行所有日常任务",
     "preset.QuickDaily.label": "快速日常",
     "preset.QuickDaily.description": "仅执行部分日常任务，快速拿满每日奖励",
+    "preset.SelfUse.label": "自用",
+    "preset.SelfUse.description": "开发人员专属",
     "focus.ManualInterceptionBattle.Succeeded": "检测到拦截战已刷新，请手动开始拦截战"
 }

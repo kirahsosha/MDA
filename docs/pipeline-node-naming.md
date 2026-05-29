@@ -203,9 +203,7 @@ FlagInMission
         "recognition": {
             "type": "And",
             "param": {
-                "all_of": [
-                    "EventRedDotVisible"
-                ]
+                "all_of": ["EventRedDotVisible"]
             }
         },
         "action": {

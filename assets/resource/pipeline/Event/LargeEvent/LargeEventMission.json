@@ -1,9 +1,8 @@
 {
     "LargeEventMission": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "大活动任务",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -29,6 +28,7 @@
                 ]
             }
         },
+        "timeout": 60000,
         "next": [
             "LargeEventMissionFlow"
         ]

@@ -1,9 +1,8 @@
 {
     "SmallEventChallenge": {
-        "max_hit": 1,
-        "timeout": 60000,
         "desc": "小活动挑战",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -13,14 +12,14 @@
                     308,
                     79
                 ],
+                "expected": [
+                    ".*挑战.*"
+                ],
                 "replace": [
                     [
                         "排",
                         "挑"
                     ]
-                ],
-                "expected": [
-                    ".*挑战.*"
                 ]
             }
         },
@@ -28,12 +27,13 @@
             "type": "Click"
         },
         "post_wait_freezes": 500,
+        "timeout": 60000,
         "next": [
-            "[JumpBack]SmallEventChallengeStart",
+            "[JumpBack]SmallEventChallengeFlow",
             "SmallEventGoBack"
         ]
     },
-    "SmallEventChallengeStart": {
+    "SmallEventChallengeFlow": {
         "max_hit": 1,
         "next": [
             "EventChallenge"

@@ -59,8 +59,8 @@
     },
     "ShopGoodTeamworkBoxPurchase": {
         "desc": "购买优秀团队合作宝箱",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -80,8 +80,8 @@
     },
     "ShopMaintenanceKitBoxPurchase": {
         "desc": "购买保养工具箱",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -101,8 +101,8 @@
     },
     "ShopCuratedManufacturerArmsPurchase": {
         "desc": "购买企业精选武装",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -122,8 +122,8 @@
     },
     "ShopGemPurchase": {
         "desc": "购买珠宝",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -143,8 +143,8 @@
     },
     "ShopVoucherPurchase": {
         "desc": "购买所有礼物券",
-        "max_hit": 6,
         "enabled": false,
+        "max_hit": 6,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -171,8 +171,8 @@
     },
     "ShopUpgradeMaterialsPurchase": {
         "desc": "购买所有养成材料",
-        "max_hit": 7,
         "enabled": false,
+        "max_hit": 7,
         "recognition": {
             "type": "TemplateMatch",
             "param": {

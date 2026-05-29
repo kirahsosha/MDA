@@ -28,7 +28,7 @@
                         "LargeEventStarAnisMerchBagClick"
                     ],
                     "pipeline_override": {
-                        "LargeEventEntry": {
+                        "LargeEventEnterMainPage": {
                             "recognition": {
                                 "param": {
                                     "template": [

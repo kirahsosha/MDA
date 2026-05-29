@@ -5,15 +5,15 @@
         "action": {
             "type": "Custom",
             "param": {
-                "custom_action": "MembershipCheck"
+                "custom_action": "RuntimeQuotaCheck"
             }
         },
         "next": [
-            "AdviseStart",
-            "[JumpBack]NavigationEnterHall"
+            "AdviseEntryFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "AdviseStart": {
+    "AdviseEntryFlow": {
         "desc": "开始咨询总流程",
         "recognition": {
             "type": "And",
@@ -102,7 +102,7 @@
                     24
                 ],
                 "expected": [
-                    "RANK"
+                    ".*RAN.*"
                 ]
             }
         },

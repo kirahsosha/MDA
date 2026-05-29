@@ -1,5 +1,5 @@
 {
-    "NavigationEnterHall": {
+    "NavigationReturnHallFlow": {
         "desc": "进入大厅",
         "anchor": "NeedCheck",
         "timeout": 120000,
@@ -11,7 +11,6 @@
             "[JumpBack]NavigationClickHomeButton",
             "[JumpBack]NavigationSkipPlot",
             "[JumpBack]CommonCloseSale",
-            "[JumpBack]LoginRewardClaim",
             "[JumpBack]CommonConfirmReward",
             "[JumpBack]NavigationOutpostBack",
             "NavigationClickFreeState",
@@ -94,7 +93,6 @@
     },
     "NavigationClickFreeState": {
         "desc": "点击自由状态",
-        "pre_wait_freezes": 500,
         "recognition": {
             "type": "And",
             "param": {
@@ -103,6 +101,7 @@
                 ]
             }
         },
+        "pre_wait_freezes": 500,
         "action": {
             "type": "Click"
         },
@@ -113,7 +112,6 @@
     },
     "NavigationOutpostBack": {
         "desc": "前哨基地误触返回",
-        "pre_wait_freezes": 500,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -128,6 +126,7 @@
                 ]
             }
         },
+        "pre_wait_freezes": 500,
         "action": {
             "type": "Click"
         }
@@ -184,12 +183,12 @@
             "type": "Click"
         }
     },
-    "HallEnterArk": {
+    "NavigationEnterArkFlow": {
         "desc": "进入方舟",
         "next": [
             "NavigationArkEntered",
             "NavigationClickArk",
-            "[JumpBack]NavigationEnterHall"
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
     "NavigationArkEntered": {

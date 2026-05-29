@@ -1,9 +1,8 @@
 {
     "SmallEventStory": {
-        "timeout": 60000,
-        "max_hit": 1,
         "desc": "小活动剧情",
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "OCR",
             "param": {
@@ -30,6 +29,7 @@
             }
         },
         "post_wait_freezes": 500,
+        "timeout": 60000,
         "next": [
             "SmallEventEventStagePageFlow"
         ]
@@ -104,7 +104,7 @@
             }
         },
         "next": [
-            "[JumpBack]BattleStart",
+            "[JumpBack]BattleEntryFlow",
             "SmallEventEventStagePageFlow",
             "[JumpBack]DialoguesSkipStory",
             "SmallEventGoBack"

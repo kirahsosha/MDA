@@ -1,12 +1,18 @@
 {
     "DailyRewardsMain": {
         "desc": "每日奖励入口",
+        "action": {
+            "type": "Custom",
+            "param": {
+                "custom_action": "RuntimeQuotaCheck"
+            }
+        },
         "next": [
-            "DailyRewardsStart",
-            "[JumpBack]NavigationEnterHall"
+            "DailyRewardsEntryFlow",
+            "[JumpBack]NavigationReturnHallFlow"
         ]
     },
-    "DailyRewardsStart": {
+    "DailyRewardsEntryFlow": {
         "desc": "每日奖励",
         "recognition": {
             "type": "And",

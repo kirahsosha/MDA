@@ -58,8 +58,8 @@
     },
     "ShopFireCodeManualPurchase": {
         "desc": "购买燃烧属性代码手册",
-        "max_hit": 3,
         "enabled": false,
+        "max_hit": 3,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -79,8 +79,8 @@
     },
     "ShopWaterCodeManualPurchase": {
         "desc": "购买水冷属性代码手册",
-        "max_hit": 3,
         "enabled": false,
+        "max_hit": 3,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -100,8 +100,8 @@
     },
     "ShopWindCodeManualPurchase": {
         "desc": "购买风压属性代码手册",
-        "max_hit": 3,
         "enabled": false,
+        "max_hit": 3,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -121,8 +121,8 @@
     },
     "ShopElectricCodeManualPurchase": {
         "desc": "购买电击属性代码手册",
-        "max_hit": 3,
         "enabled": false,
+        "max_hit": 3,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -142,8 +142,8 @@
     },
     "ShopIronCodeManualPurchase": {
         "desc": "购买铁甲属性代码手册",
-        "max_hit": 3,
         "enabled": false,
+        "max_hit": 3,
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -163,8 +163,8 @@
     },
     "ShopCodeManualSelectionBoxPurchase": {
         "desc": "购买代码手册选择宝箱",
-        "max_hit": 1,
         "enabled": false,
+        "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
             "param": {

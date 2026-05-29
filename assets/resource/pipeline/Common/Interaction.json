@@ -79,6 +79,9 @@
                 ],
                 "template": [
                     "Common/MAX.png"
+                ],
+                "threshold": [
+                    0.8
                 ]
             }
         },
