@@ -121,9 +121,9 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    705,
+                    606,
                     536,
-                    88,
+                    187,
                     37
                 ],
                 "expected": [
@@ -142,6 +142,7 @@
         "desc": "战斗中",
         "timeout": 180000,
         "next": [
+            "BattleEntryFlow", //适用于单人突击这种连续进入两次战斗的情况
             "[JumpBack]BattleClickAutoBurst",
             "[JumpBack]BattleClickAutoShoot",
             "[JumpBack]DialoguesSkipStory",
@@ -329,6 +330,7 @@
             "type": "Click"
         },
         "next": [
+            "[JumpBack]CommonConfirmAction",
             "BattleInBattleFlow"
         ]
     },
@@ -371,9 +373,9 @@
             "param": {
                 "roi": [
                     671,
-                    571,
+                    536,
                     157,
-                    114
+                    149
                 ],
                 "expected": [
                     ".*快速战斗.*"
@@ -407,13 +409,14 @@
             "type": "OCR",
             "param": {
                 "roi": [
-                    671,
-                    571,
-                    157,
-                    114
+                    534,
+                    534,
+                    294,
+                    151
                 ],
                 "expected": [
-                    "进入战斗"
+                    "进入战斗",
+                    "^挑战$"
                 ]
             }
         }

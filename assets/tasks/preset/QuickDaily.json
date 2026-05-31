@@ -57,6 +57,9 @@
                         "DailyRewardsDailyLogin": "Yes",
                         "DailyRewardsFreeRecruit": "Yes"
                     }
+                },
+                {
+                    "name": "SoloRaid"
                 }
             ]
         }

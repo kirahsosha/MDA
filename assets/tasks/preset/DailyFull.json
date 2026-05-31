@@ -89,9 +89,12 @@
                     }
                 },
                 {
+                    "name": "SoloRaid"
+                },
+                {
                     "name": "SmallEvent",
                     "option": {
-                        "SmallEventTheme": "BSideIdol",
+                        "SmallEventTheme": "BitterSpice",
                         "SmallEventContent": [
                             "SmallEventChallenge",
                             "SmallEventStory",

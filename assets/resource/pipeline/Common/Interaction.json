@@ -64,7 +64,8 @@
         },
         "action": {
             "type": "Click"
-        }
+        },
+        "post_wait_freezes": 200
     },
     "CommonClickMax": {
         "desc": "点击MAX",

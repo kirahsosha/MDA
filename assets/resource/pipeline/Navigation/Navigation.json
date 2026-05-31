@@ -86,7 +86,7 @@
             "type": "And",
             "param": {
                 "all_of": [
-                    "CommonBellVisible"
+                    "CommonMailVisible"
                 ]
             }
         }
@@ -106,7 +106,7 @@
             "type": "Click"
         },
         "next": [
-            "NavigationNoticeFlow",
+            "NavigationMailFlow",
             "[Anchor]NeedCheck"
         ]
     },
@@ -161,6 +161,21 @@
         },
         "next": [
             "CommonClosePage"
+        ]
+    },
+    "NavigationMailFlow": {
+        "desc": "邮件流程",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "CommonMailVisible"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]CommonClosePage",
+            "CommonEndTask"
         ]
     },
     "NavigationClickHall": {
@@ -273,6 +288,23 @@
                 ],
                 "template": [
                     "Common/Bell.png"
+                ]
+            }
+        }
+    },
+    "CommonMailVisible": {
+        "desc": "右上角邮件标识",
+        "recognition": {
+            "type": "TemplateMatch",
+            "param": {
+                "roi": [
+                    1211,
+                    9,
+                    30,
+                    31
+                ],
+                "template": [
+                    "Common/Mail.png"
                 ]
             }
         }

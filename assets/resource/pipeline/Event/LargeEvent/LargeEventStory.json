@@ -148,7 +148,7 @@
             "[JumpBack]LargeEventStory1StageRepeatableClick",
             "[JumpBack]LargeEventStory2StageNormalRepeatableClick",
             "[JumpBack]LargeEventStory2StageHardRepeatableClick",
-            "LargeEventGoBack"
+            "LargeEventBattleBlocked"
         ]
     },
     "LargeEventEventStageBattlePage": {
@@ -325,5 +325,20 @@
             "type": "Click"
         },
         "post_wait_freezes": 500
+    },
+    "LargeEventBattleBlocked": {
+        "desc": "活动体力耗尽",
+        "recognition": {
+            "type": "And",
+            "param": {
+                "all_of": [
+                    "BattleCannotBattleBlocked"
+                ]
+            }
+        },
+        "next": [
+            "[JumpBack]BattleClosePage",
+            "LargeEventGoBack"
+        ]
     }
 }

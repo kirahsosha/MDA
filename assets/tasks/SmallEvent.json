@@ -17,9 +17,44 @@
     "option": {
         "SmallEventTheme": {
             "type": "select",
-            "default_case": "BSideIdol",
+            "default_case": "BitterSpice",
             "label": "$option.SmallEventTheme.label",
             "cases": [
+                {
+                    "name": "BitterSpice",
+                    "label": "$option.SmallEventTheme.BitterSpice",
+                    "pipeline_override": {
+                        "SmallEventEnterMainPage": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "SmallEvent/BitterSpice/BitterSpiceLogo.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "SmallEventStageNormalClick": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormal.png",
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalSP.png"
+                                    ]
+                                }
+                            }
+                        },
+                        "SmallEventStageNormalRepeatableClick": {
+                            "recognition": {
+                                "param": {
+                                    "template": [
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalRepeatable.png",
+                                        "SmallEvent/BitterSpice/BitterSpiceStageNormalRepeatableSP.png"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
                 {
                     "name": "BSideIdol",
                     "label": "$option.SmallEventTheme.BSideIdol",
