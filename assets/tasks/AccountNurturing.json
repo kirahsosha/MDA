@@ -1,30 +1,30 @@
 {
     "task": [
         {
-            "name": "Arena",
-            "label": "$task.Arena.label",
-            "entry": "ArenaMain",
-            "description": "$task.Arena.description",
+            "name": "AccountNurturing",
+            "label": "$task.AccountNurturing.label",
+            "entry": "AccountNurturingMain",
+            "description": "$task.AccountNurturing.description",
             "option": [
-                "SpecialReward",
-                "ArenaEnterRookieArena",
-                "ArenaEnterSpecialArena",
-                "ArenaEnterChampionArena"
+                "AccountNurturingCharacterBreakthrough",
+                "AccountNurturingSynchroDeviceEnhance"
             ],
             "group": [
-                "daily"
+                "utility"
             ]
         }
     ],
     "option": {
-        "SpecialReward": {
+        "AccountNurturingCharacterBreakthrough": {
             "type": "switch",
-            "label": "$option.SpecialReward.label",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingCharacterBreakthrough.label",
+            "description": "$option.AccountNurturingCharacterBreakthrough.description",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ArenaClaimSpecialReward": {
+                        "AccountNurturingCharacterBreakthrough": {
                             "enabled": true
                         }
                     }
@@ -32,43 +32,49 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ArenaClaimSpecialReward": {
+                        "AccountNurturingCharacterBreakthrough": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "ArenaEnterRookieArena": {
+        "AccountNurturingSynchroDeviceEnhance": {
             "type": "switch",
-            "label": "$option.ArenaEnterRookieArena.label",
+            "default_case": "Yes",
+            "label": "$option.AccountNurturingSynchroDeviceEnhance.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ArenaEnterRookieArena": {
+                        "AccountNurturingSynchroDeviceEnhance": {
                             "enabled": true
                         }
-                    }
+                    },
+                    "option": [
+                        "AutoAllocation",
+                        "UseConsumables"
+                    ]
                 },
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ArenaEnterRookieArena": {
+                        "AccountNurturingSynchroDeviceEnhance": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "ArenaEnterSpecialArena": {
+        "AutoAllocation": {
             "type": "switch",
-            "label": "$option.ArenaEnterSpecialArena.label",
+            "default_case": "No",
+            "label": "$option.AutoAllocation.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ArenaEnterSpecialArena": {
+                        "SynchroDeviceClickAutoAllocation": {
                             "enabled": true
                         }
                     }
@@ -76,21 +82,22 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ArenaEnterSpecialArena": {
+                        "SynchroDeviceClickAutoAllocation": {
                             "enabled": false
                         }
                     }
                 }
             ]
         },
-        "ArenaEnterChampionArena": {
+        "UseConsumables": {
             "type": "switch",
-            "label": "$option.ArenaEnterChampionArena.label",
+            "default_case": "No",
+            "label": "$option.UseConsumables.label",
             "cases": [
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ArenaEnterChampionArena": {
+                        "SynchroDeviceUseConsumables": {
                             "enabled": true
                         }
                     }
@@ -98,7 +105,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ArenaEnterChampionArena": {
+                        "SynchroDeviceUseConsumables": {
                             "enabled": false
                         }
                     }

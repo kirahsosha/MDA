@@ -12,7 +12,7 @@
             "[JumpBack]NavigationSkipPlot",
             "[JumpBack]CommonCloseSale",
             "[JumpBack]CommonConfirmReward",
-            "[JumpBack]NavigationOutpostBack",
+            "[JumpBack]NavigationReturnOutpost",
             "NavigationClickFreeState",
             "[JumpBack]NavigationClickHall"
         ]
@@ -110,7 +110,7 @@
             "[Anchor]NeedCheck"
         ]
     },
-    "NavigationOutpostBack": {
+    "NavigationReturnOutpost": {
         "desc": "前哨基地误触返回",
         "recognition": {
             "type": "OCR",
@@ -127,6 +127,26 @@
             }
         },
         "pre_wait_freezes": 500,
+        "action": {
+            "type": "Click"
+        }
+    },
+    "NavigationEnterOutpost": {
+        "desc": "进入前哨基地",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    362,
+                    542,
+                    82,
+                    33
+                ],
+                "expected": [
+                    "前哨基地"
+                ]
+            }
+        },
         "action": {
             "type": "Click"
         }

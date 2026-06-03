@@ -9,7 +9,8 @@
                 "RedDotClearCashShop",
                 "RedDotClearNotice",
                 "RedDotClearSubMenu",
-                "RedDotClearProfilePage"
+                "RedDotClearProfilePage",
+                "RedDotClearArchives"
             ],
             "group": [
                 "utility"
@@ -99,6 +100,28 @@
                     "name": "No",
                     "pipeline_override": {
                         "RedDotClearProfilePage": {
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+        },
+        "RedDotClearArchives": {
+            "type": "switch",
+            "label": "$option.RedDotClearArchives.label",
+            "cases": [
+                {
+                    "name": "Yes",
+                    "pipeline_override": {
+                        "RedDotClearArchives": {
+                            "enabled": true
+                        }
+                    }
+                },
+                {
+                    "name": "No",
+                    "pipeline_override": {
+                        "RedDotClearArchives": {
                             "enabled": false
                         }
                     }
