@@ -107,7 +107,7 @@
         },
         "next": [
             "[JumpBack]RedDotClearClickLobbyNew",
-            "NavigationReturnHallFlow"
+            "CommonReturnHall"
         ]
     },
     "RedDotClearLobbyVisible": {
