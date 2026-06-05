@@ -17,19 +17,19 @@
 
 ## 常用 PowerShell 对照
 
-| Linux/macOS | PowerShell                                      |
-| ----------- | ----------------------------------------------- |
-| `ls`        | `Get-ChildItem` 或 `dir`                        |
-| `cat`       | `Get-Content` 或 `type`                         |
-| `mkdir -p`  | `New-Item -ItemType Directory -Force`           |
-| `rm -rf`    | `Remove-Item -Recurse -Force`                   |
-| `cp -r`     | `Copy-Item -Recurse`                            |
-| `mv`        | `Move-Item`                                     |
-| `chmod`     | `Set-ItemProperty` 或 `icacls`                  |
-| `grep`      | `Select-String`                                 |
-| `find`      | `Get-ChildItem -Recurse`                        |
-| `sed`       | `-replace` 运算符或 `ForEach-Object`            |
-| `awk`       | `ConvertFrom-Csv`、`Select-Object` 或 `-split`  |
+| Linux/macOS | PowerShell                                     |
+| ----------- | ---------------------------------------------- |
+| `ls`        | `Get-ChildItem` 或 `dir`                       |
+| `cat`       | `Get-Content` 或 `type`                        |
+| `mkdir -p`  | `New-Item -ItemType Directory -Force`          |
+| `rm -rf`    | `Remove-Item -Recurse -Force`                  |
+| `cp -r`     | `Copy-Item -Recurse`                           |
+| `mv`        | `Move-Item`                                    |
+| `chmod`     | `Set-ItemProperty` 或 `icacls`                 |
+| `grep`      | `Select-String`                                |
+| `find`      | `Get-ChildItem -Recurse`                       |
+| `sed`       | `-replace` 运算符或 `ForEach-Object`           |
+| `awk`       | `ConvertFrom-Csv`、`Select-Object` 或 `-split` |
 
 ## 跨代理记忆
 

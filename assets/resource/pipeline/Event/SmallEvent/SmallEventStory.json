@@ -127,8 +127,7 @@
         "next": [
             "[JumpBack]BattleEntryFlow",
             "SmallEventEventStagePageFlow",
-            "[JumpBack]DialoguesSkipStory",
-            "SmallEventGoBack"
+            "[JumpBack]DialoguesSkipStory"
         ]
     },
     "SmallEventStoryVisible": {
