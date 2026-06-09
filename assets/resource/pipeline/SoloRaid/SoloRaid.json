@@ -50,7 +50,7 @@
         "next": [
             "SoloRaidFlow",
             "SoloRaidConfirmResult",
-            "SoloRaidClickEntry" //兜底
+            "SoloRaidClickEntry"
         ]
     },
     "SoloRaidFlow": {
@@ -130,7 +130,7 @@
                     "SoloRaid/SoloRaidLevelⅥ.png",
                     "SoloRaid/SoloRaidLevelⅦ.png"
                 ],
-                "index": -1 //选择最新已解锁的关卡，-1表示最后一个匹配到的模板
+                "index": -1
             }
         },
         "action": {
@@ -142,3 +142,4 @@
         ]
     }
 }
+

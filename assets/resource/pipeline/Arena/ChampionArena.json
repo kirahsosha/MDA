@@ -179,7 +179,7 @@
         ]
     },
     "ChampionArenaCloseCheerUpPage": {
-        "desc": "关闭应援页面", //通常情况下是因为错过了上次应援
+        "desc": "关闭应援页面",
         "recognition": {
             "type": "OCR",
             "param": {
@@ -310,3 +310,4 @@
         }
     }
 }
+

@@ -86,7 +86,7 @@
         }
     },
     "RedDotClearClickLobby": {
-        "desc": "点击装饰大厅", //装饰大厅一定会有New
+        "desc": "点击装饰大厅",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -113,7 +113,7 @@
             }
         },
         "next": [
-            "RedDotClearClickLobby", //防止点击失败
+            "RedDotClearClickLobby",
             "RedDotClearLobbyFlow"
         ]
     },
@@ -163,7 +163,7 @@
                 "template": [
                     "Common/New.png"
                 ],
-                "order_by": "Vertical", //从下往上找
+                "order_by": "Vertical",
                 "index": -1
             }
         },
@@ -180,3 +180,4 @@
         }
     }
 }
+

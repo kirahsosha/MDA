@@ -68,7 +68,7 @@
         ]
     },
     "CharacterBreakthroughClickHollowDot": {
-        "desc": "点击空心圆点", //筛选出可以突破的角色
+        "desc": "点击空心圆点",
         "recognition": {
             "type": "TemplateMatch",
             "param": {
@@ -161,7 +161,7 @@
         "next": [
             "[JumpBack]CharacterBreakthroughClickMax",
             "CharacterBreakthroughClickLimitBreak",
-            "CharacterBreakthroughClickBreakthroughRedDot" //兜底
+            "CharacterBreakthroughClickBreakthroughRedDot"
         ]
     },
     "CharacterBreakthroughClickMax": {
@@ -263,7 +263,8 @@
         "next": [
             "[JumpBack]CommonClosePage",
             "CommonGoBack",
-            "CharacterBreakthroughConfirmLimitBreak" //兜底
+            "CharacterBreakthroughConfirmLimitBreak"
         ]
     }
 }
+

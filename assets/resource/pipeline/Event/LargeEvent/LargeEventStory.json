@@ -220,7 +220,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -244,7 +244,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -268,7 +268,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -291,7 +291,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -314,7 +314,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -337,7 +337,7 @@
                     604
                 ],
                 "template": [
-                    "Common/RedDot.png" //占位，应该去task页面修改
+                    "Common/RedDot.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -364,3 +364,4 @@
         ]
     }
 }
+

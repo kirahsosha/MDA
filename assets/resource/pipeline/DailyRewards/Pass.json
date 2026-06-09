@@ -9,7 +9,7 @@
         ]
     },
     "DailyRewardsPassClickChange": {
-        "desc": "点击更换pass", //确保其一定时间内不会再次更换，防止出现在更换途中识别导致失败的情况
+        "desc": "点击更换pass",
         "max_hit": 1,
         "recognition": {
             "type": "TemplateMatch",
@@ -235,3 +235,4 @@
         }
     }
 }
+
