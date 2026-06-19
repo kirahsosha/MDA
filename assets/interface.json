@@ -6,7 +6,7 @@
     "license": "locales/LICENSE_SHORT.md",
     "welcome": "README.md",
     "icon": "locales/MDA-Tiny.png",
-    "version": "0.1.0",
+    "version": "v1.7.0",
     "languages": {
         "zh_cn": "locales/interface/zh_cn.json",
         "en_us": "locales/interface/en_us.json"
