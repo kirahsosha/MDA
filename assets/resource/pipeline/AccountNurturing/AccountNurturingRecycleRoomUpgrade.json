@@ -213,16 +213,11 @@
     "RecycleRoomClickUpgrade": {
         "desc": "点击升级",
         "recognition": {
-            "type": "OCR",
+            "type": "And",
             "param": {
-                "roi": [
-                    657,
-                    571,
-                    65,
-                    34
-                ],
-                "expected": [
-                    "升级"
+                "all_of": [
+                    "RecycleRoomClickUpgradeVisible",
+                    "RecycleRoomClickUpgradeAvailable"
                 ]
             }
         },
@@ -235,6 +230,43 @@
             "RecycleRoomClickUpgrade", //兜底
             "CommonClosePage"
         ]
+    },
+    "RecycleRoomClickUpgradeVisible": {
+        "desc": "升级可见",
+        "recognition": {
+            "type": "OCR",
+            "param": {
+                "roi": [
+                    657,
+                    571,
+                    65,
+                    34
+                ],
+                "expected": [
+                    "升级"
+                ]
+            }
+        }
+    },
+    "RecycleRoomClickUpgradeAvailable": {
+        "desc": "升级可点击",
+        "recognition": {
+            "type": "ColorMatch",
+            "param": {
+                "roi": "RecycleRoomClickUpgradeVisible",
+                "lower": [
+                    220,
+                    220,
+                    220
+                ],
+                "upper": [
+                    255,
+                    255,
+                    255
+                ],
+                "count": 30
+            }
+        }
     },
     "RecycleRoomUpgradeConfirm": {
         "desc": "升级结果确认",
