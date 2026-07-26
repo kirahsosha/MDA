@@ -6,7 +6,7 @@
     "license": "locales/LICENSE_SHORT.md",
     "welcome": "README.md",
     "icon": "locales/MDA-Tiny.png",
-    "version": "v1.7.22",
+    "version": "v1.7.23",
     "languages": {
         "zh_cn": "locales/interface/zh_cn.json",
         "en_us": "locales/interface/en_us.json"
@@ -74,6 +74,11 @@
     "task": [],
     "group": [
         {
+            "name": "preprocess",
+            "label": "$group.preprocess.label",
+            "description": "$group.preprocess.description"
+        },
+        {
             "name": "daily",
             "label": "$group.daily.label",
             "description": "$group.daily.description"
@@ -95,6 +100,7 @@
         }
     ],
     "import": [
+        "tasks/EnterHall.json",
         "tasks/CashShop.json",
         "tasks/Shop.json",
         "tasks/SimulationRoom.json",
