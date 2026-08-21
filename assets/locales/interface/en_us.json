@@ -130,7 +130,7 @@
     "option.DailyRewardsFreeRecruit.label": "Anniversary Free Recruitment",
     "task.SoloRaid.label": "🔥Solo Raid",
     "task.SoloRaid.description": "Enter the Solo Raid interface and complete stage challenge or quick battle",
-    "task.MapPushing.label": "🗺️Auto Map Pushing [5x]",
+    "task.MapPushing.label": "🗺️Auto Map Pushing",
     "task.MapPushing.description": "Must be selected separately. Click to start near monsters on the map; it will automatically click monsters for battle and trigger mechanisms",
     "task.RedDotClear.label": "🔴Clear Red Dots",
     "task.RedDotClear.description": "Clear red dots across supported interfaces",
@@ -177,6 +177,12 @@
     "option.SmallEventContent.SmallEventChallenge": "Challenge",
     "option.SmallEventContent.SmallEventStory": "Story",
     "option.SmallEventContent.SmallEventMission": "Mission",
+    "task.EquipmentReroll.label": "🔨Effect Reroll",
+    "task.EquipmentReroll.description": "Performs effect changes on T10 equipment. Currently only the \"Four Elemental Damage\" template is implemented: each of the four pieces gets at least one \"Elemental Damage\" effect",
+    "option.EquipmentRerollMode.label": "Reroll Mode",
+    "option.RerollCharacter.label": "Character",
+    "option.EquipmentRerollTemplate.label": "Reroll Template",
+    "option.FourElementalDamage.label": "Four Elemental Damage",
     "preset.DailyFull.label": "Full Daily Routine",
     "preset.DailyFull.description": "Covers every daily routine task, ideal for one-click runs when logging in each day.",
     "preset.QuickDaily.label": "Quick Daily",
@@ -185,5 +191,5 @@
     "preset.SelfUse.description": "For developers only",
     "focus.ManualInterceptionBattle.Succeeded": "Interception battle has been refreshed, please start the battle manually",
     "focus.CoordinatedOperationsConfirmConnectionInterrupted.Succeeded": "Coordinated operations connection interrupted, task has been stopped",
-    "focus.MapPushingFlow.Action.Succeeded": "Auto map pushing has started. This task consumes runtime quota at 5x."
+    "focus.MapPushingFlow.Action.Succeeded": "Auto map pushing has started."
 }
