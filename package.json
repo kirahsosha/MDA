@@ -1,8 +1,11 @@
 {
     "scripts": {
         "utf8-cmd": "scripts\\utf8-cmd.cmd",
-        "package:win": "python tools/package_release.py --build --os win",
-        "format": "node scripts/clean-empty-pipeline-fields.mjs && prettier --write ."
+    "package:win": "python tools/build_and_install.py --ci && python tools/package_release.py --os win --output-dir dist",
+        "format": "prettier --write \"**/*.{json,yml,yaml,md}\"",
+        "format:aggressive": "prettier --print-width 20 --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\" && prettier --write \"assets/resource/pipeline/**/*.json\" \"assets/tasks/**/*.json\"",
+        "format:check": "prettier --check \"**/*.{json,yml,yaml,md}\"",
+        "check:theme": "node scripts/check-theme-sync.mjs"
     },
     "devDependencies": {
         "@biomejs/biome": "2.5.12",
