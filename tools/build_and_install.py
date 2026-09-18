@@ -402,6 +402,13 @@ def main() -> None:
             if link_or_copy_file(src, dst):
                 print(f"  {Console.ok('->')} {dst}")
 
+    # 项目根目录的 scripts 脚本目录（手机端分辨率适配等辅助脚本）随包分发，便于按 README 指引直接调用
+    scripts_src = PROJECT_BASE / "scripts"
+    if scripts_src.is_dir():
+        scripts_dst = install_dir / "scripts"
+        if link_or_copy_dir(scripts_src, scripts_dst):
+            print(f"  {Console.ok('->')} {scripts_dst}")
+
     # 4a. Ensure runtime directories exist as regular dirs (not junctioned)
     for runtime_dir_name in ("cache", "debug"):
         runtime_dir = install_dir / runtime_dir_name
