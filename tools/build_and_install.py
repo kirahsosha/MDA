@@ -215,9 +215,7 @@ def build_go_agent(
     goarch = (
         "amd64"
         if machine in ("x86_64", "amd64")
-        else "arm64"
-        if machine in ("aarch64", "arm64")
-        else machine
+        else "arm64" if machine in ("aarch64", "arm64") else machine
     )
 
     ext = ".exe" if goos == "windows" else ""
@@ -421,7 +419,7 @@ def main() -> None:
     deps_bin = PROJECT_BASE / "deps" / "bin"
 
     maafw_is_link = maafw_dir.is_symlink()
-    if hasattr(maafw_dir, 'is_junction'):
+    if hasattr(maafw_dir, "is_junction"):
         maafw_is_link = maafw_is_link or maafw_dir.is_junction()
 
     if maafw_is_link:
