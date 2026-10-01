@@ -165,7 +165,8 @@
                 ],
                 "expected": [
                     ".*活动关.*"
-                ]
+                ],
+                "only_rec": true //避免 batch OCR 降采样后 det 读不出小字
             }
         }
     },
@@ -300,7 +301,8 @@
                 ],
                 "template": [
                     "LargeEvent/CoinRushShowdown/CoinRushShowdownStory1Stage.png", //当前活动，随最新主题更新
-                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageNormal.png"
+                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageNormal.png",
+                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageHard.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
@@ -328,7 +330,8 @@
                 ],
                 "template": [
                     "LargeEvent/CoinRushShowdown/CoinRushShowdownStory1StageRepeatable.png", //当前活动，随最新主题更新
-                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageNormalRepeatable.png"
+                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageNormalRepeatable.png",
+                    "LargeEvent/CoinRushShowdown/CoinRushShowdownStory2StageHardRepeatable.png"
                 ],
                 "order_by": "Vertical",
                 "index": -1
