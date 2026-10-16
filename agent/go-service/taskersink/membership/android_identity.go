@@ -1,7 +1,6 @@
 package membership
 
 import (
-	"encoding/json"
 	"regexp"
 	"strings"
 

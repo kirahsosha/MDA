@@ -5,15 +5,21 @@ import "sync"
 // MembershipStatus keeps the historical status shape for compatibility.
 // 会员等级限制、设备绑定和远端订阅状态均已移除，当前只返回本地默认值。
 type MembershipStatus struct {
-	Tier          string
-	PlanCode      string
-	PlanName      string
-	StartsOn      string
-	ExpiresOn     string
-	RemainingDays int
-	IsMember      bool
-	UserID        string
-	DeviceCode    DeviceCodeV7
+	Tier                        string
+	TierName                    string
+	TierCode                    string
+	PlanCode                    string
+	PlanName                    string
+	StartsOn                    string
+	ExpiresOn                   string
+	RemainingDays               int
+	RegularDailyRuntimeMinutes  int
+	DailyRuntimeMinutes         int
+	SpecialPeriodRuntimeMinutes int
+	UnlimitedRuntime            bool
+	IsMember                    bool
+	UserID                      string
+	DeviceCode                  DeviceCodeV7
 }
 
 var (
@@ -34,6 +40,7 @@ func GetMembershipStatus() *MembershipStatus {
 
 	status := &MembershipStatus{
 		Tier:        "普通用户",
+		TierName:    "普通用户",
 		IsMember:    false,
 		DeviceCode:  DeviceCodeV7{},
 	}
