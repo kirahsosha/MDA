@@ -427,9 +427,13 @@ FodyWeavers.xsd
 # Local History for Visual Studio Code
 .history/
 
-# Claude Code
-.claude/*
-!.claude/skills/
+# Project agent skills
+!.agents/
+!.agents/skills/
+!.agents/skills/**
+.agents/**/__pycache__/
+.agents/**/*.pyc
+.agents/settings.local.json
 
 # Windows Installer files from build outputs
 *.cab
@@ -479,6 +483,13 @@ Temporary Items
 venv/
 .venv/
 .cache/
+
+# Android 签名、安装包及设备反馈仅保存在本机或 CI Secrets / Artifacts。
+*.apk
+*.aab
+*.jks
+*.keystore
+maafw_logs_*.zip
 
 # maa-tools
 tests/maatools
