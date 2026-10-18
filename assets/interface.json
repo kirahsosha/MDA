@@ -4,7 +4,7 @@
     "description": "$description.file",
     "contact": "$contact.file",
     "license": "locales/LICENSE_SHORT.md",
-    "welcome": "README.md",
+    "welcome": "$welcome.file",
     "icon": "locales/MDA-Tiny.png",
     "version": "v1.11.1",
     "languages": {
