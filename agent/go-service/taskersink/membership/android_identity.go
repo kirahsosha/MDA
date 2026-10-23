@@ -1,6 +1,7 @@
 package membership
 
 import (
+	"encoding/json"
 	"regexp"
 	"strings"
 
@@ -38,9 +39,61 @@ func normalizeAndroidID(value string) string {
 }
 
 func androidDeviceCodeFromJSON(raw string) DeviceCodeV7 {
-	_ = raw
-	log.Warn().Msg("Android membership identity is disabled in this local build")
-	return DeviceCodeV7{}
+	device := DeviceCodeV7{}
+	var report androidIdentitySnapshot
+	if err := json.Unmarshal([]byte(raw), &report); err != nil || report.SchemaVersion != 1 {
+		log.Warn().Msg("Android membership identity is unavailable; no placeholder identity generated")
+		return device
+	}
+	values := map[string][]string{}
+	for _, row := range report.Rows {
+		if row.Status != "read" {
+			continue
+		}
+		for _, value := range row.Values {
+			if strings.Contains(value, "*") || (strings.HasPrefix(row.Name, "serial.") && !notPlaceholder(value)) {
+				continue
+			}
+			if strings.HasPrefix(row.Name, "android_id.") {
+				if normalized := normalizeAndroidID(value); normalized != "" {
+					values[row.Name] = append(values[row.Name], normalized)
+				}
+			} else if strings.HasPrefix(row.Name, "serial.") {
+				normalized := strings.TrimSpace(value)
+				if normalized != "" && strings.Trim(normalized, "0") != "" && !strings.EqualFold(normalized, "9774d56d682e549c") {
+					values[row.Name] = append(values[row.Name], normalized)
+				}
+			}
+		}
+	}
+	one := func(name string) string {
+		if len(values[name]) > 0 {
+			return values[name][0]
+		}
+		return ""
+	}
+	serial := ""
+	for _, name := range []string{"serial.ro.boot.serialno", "serial.ro.serialno", "serial.api", "serial.policy"} {
+		if serial = one(name); serial != "" {
+			break
+		}
+	}
+	privilegedID := one("android_id.privileged")
+	if serial == "" || privilegedID == "" {
+		log.Warn().Msg("Android membership needs valid serial and privileged Android ID; no shared fallback generated")
+		return DeviceCodeV7{}
+	}
+	device.UUIDHash = androidMappingHash("uuid", "serial", serial)
+	device.BIOSHash = androidMappingHash("bios", "serial-root", device.UUIDHash)
+	device.CPUHash = androidMappingHash("cpu", "android-id-privileged", privilegedID)
+	device.BoardHash = androidMappingHash("board", "privileged-root", device.CPUHash)
+	device.DiskHash = androidMappingHash("disk", "privileged-root", device.CPUHash)
+	if appID := one("android_id.app"); appID != "" {
+		device.GUIDHash = androidMappingHash("guid", "android-id-app", appID)
+	} else {
+		device.GUIDHash = androidMappingHash("guid", "primary-fallback", device.UUIDHash+"\x00"+device.CPUHash)
+	}
+	return device
 }
 
 func validAndroidHash(value string) bool {
@@ -48,6 +101,12 @@ func validAndroidHash(value string) bool {
 }
 
 func isAndroidMappedDevice(device DeviceCodeV7) bool {
-	_ = device
-	return false
+	for _, value := range []string{device.CPUHash, device.UUIDHash, device.BIOSHash, device.BoardHash, device.DiskHash, device.GUIDHash} {
+		if !validAndroidHash(value) {
+			return false
+		}
+	}
+	return strings.EqualFold(device.BIOSHash, androidMappingHash("bios", "serial-root", strings.ToLower(device.UUIDHash))) &&
+		strings.EqualFold(device.BoardHash, androidMappingHash("board", "privileged-root", strings.ToLower(device.CPUHash))) &&
+		strings.EqualFold(device.DiskHash, androidMappingHash("disk", "privileged-root", strings.ToLower(device.CPUHash)))
 }

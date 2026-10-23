@@ -1,6 +1,11 @@
 package membership
 
-import "sync"
+import (
+	"path/filepath"
+	"strings"
+	"sync"
+	"testing"
+)
 
 // MembershipStatus keeps the historical status shape for compatibility.
 // 会员等级限制、设备绑定和远端订阅状态均已移除，当前只返回本地默认值。
@@ -50,4 +55,58 @@ func GetMembershipStatus() *MembershipStatus {
 	cachedStatusMu.Unlock()
 
 	return status
+}
+
+var localVersion = "local"
+
+// SetVersion preserves the historical version hook used by tests and legacy callers.
+// The local fork keeps the API, but membership checks and remote validation remain disabled.
+func SetVersion(version string) {
+	version = strings.TrimSpace(version)
+	if version == "" {
+		localVersion = "local"
+		return
+	}
+	localVersion = version
+}
+
+func GetVersion() string {
+	return localVersion
+}
+
+func cacheStatus(status *MembershipStatus) {
+	cachedStatusMu.Lock()
+	defer cachedStatusMu.Unlock()
+	if status == nil {
+		cachedStatus = nil
+		return
+	}
+	cachedStatus = status
+}
+
+func testStatus(minutes int, userID string) *MembershipStatus {
+	status := GetMembershipStatus()
+	status.Tier = "测试用户"
+	status.TierName = "测试用户"
+	status.TierCode = "test"
+	status.PlanCode = "test"
+	status.PlanName = "测试计划"
+	status.StartsOn = "2024-01-01"
+	status.ExpiresOn = "2099-12-31"
+	status.RegularDailyRuntimeMinutes = minutes
+	status.DailyRuntimeMinutes = minutes
+	status.SpecialPeriodRuntimeMinutes = 0
+	status.UnlimitedRuntime = false
+	status.IsMember = true
+	status.UserID = userID
+	status.DeviceCode = DeviceCodeV7{}
+	return status
+}
+
+func isolateQuotaState(t testing.TB) string {
+	t.Helper()
+	dir := t.TempDir()
+	path := filepath.Join(dir, "membership-quota.json")
+	t.Setenv("MDA_MEMBERSHIP_QUOTA_STATE_PATH", path)
+	return path
 }

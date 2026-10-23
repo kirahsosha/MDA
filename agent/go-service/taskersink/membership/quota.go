@@ -106,6 +106,19 @@ func quotaSpecialPeriodKey(status *MembershipStatus) string {
 }
 
 func quotaStatePath() (string, error) {
+	for _, key := range []string{
+		"MDA_MEMBERSHIP_QUOTA_STATE_PATH",
+		"MDA_GO_SERVICE_QUOTA_STATE_PATH",
+		"MDA_QUOTA_STATE_PATH",
+	} {
+		if path := strings.TrimSpace(os.Getenv(key)); path != "" {
+			if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+				return "", err
+			}
+			return path, nil
+		}
+	}
+
 	dir, err := os.UserConfigDir()
 	if err != nil {
 		return "", fmt.Errorf("resolve user config directory: %w", err)
